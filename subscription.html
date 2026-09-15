@@ -165,6 +165,13 @@
             z-index: 0;
         }
     </style>
+[class*="rounded"] { border-radius: 14px; }
+.rp-logo { display:inline-flex; align-items:center; gap:8px; font-size:24px; font-weight:800; color:var(--p-ink); }
+.rp-logo b { color: var(--p-accent); }
+.paper-pagebar { border-bottom: 1px solid var(--p-line) !important; margin-bottom: 22px; }
+.paper-section-number { font-family: inherit; font-style: normal; color: var(--p-accent); font-weight: 800; }
+.bento-card { border-radius: 16px !important; }
+
 
 <style id="paper-sub-theme">
 /* --- Newspaper Edition: subscriber portal --- */
@@ -174,15 +181,15 @@
   font-weight: 100 900; font-style: normal; font-display: swap;
 }
 :root {
-  --p-bg:#faf7f1; --p-surface:#f5f0e6; --p-raised:#fffdf8; --p-ink:#25251f;
-  --p-muted:#7e786b; --p-faint:#a09a8b; --p-line:#ded7ca; --p-strong-line:#3b3930;
-  --p-accent:#a64329; --p-accent-soft:#f2e6dc; --p-green:#315b4d; --p-amber:#ad7a2b; --p-red:#ab3e36;
+  --p-bg:#f6f6f8; --p-surface:#eef0f3; --p-raised:#ffffff; --p-ink:#101014;
+  --p-muted:#6b7280; --p-faint:#9ca3af; --p-line:#e5e7eb; --p-strong-line:#101014;
+  --p-accent:#ef4444; --p-accent-soft:#fee2e2; --p-green:#16a34a; --p-amber:#d97706; --p-red:#e11d48;
   --p-serif: Georgia,'Times New Roman',serif;
 }
 .dark {
-  --p-bg:#191814; --p-surface:#24211b; --p-raised:#211f19; --p-ink:#f0e9db;
-  --p-muted:#b4aa98; --p-faint:#9b907d; --p-line:#484135; --p-strong-line:#c5bba8;
-  --p-accent:#e08b69; --p-accent-soft:#38281f; --p-green:#9cc6ae; --p-amber:#dcb374; --p-red:#e19086;
+  --p-bg:#0a0a0d; --p-surface:#121218; --p-raised:#14141a; --p-ink:#f5f6f8;
+  --p-muted:#9aa2ad; --p-faint:#6b7280; --p-line:rgba(255,255,255,.08); --p-strong-line:rgba(255,255,255,.22);
+  --p-accent:#ef4444; --p-accent-soft:#3f1d22; --p-green:#4ade80; --p-amber:#fbbf24; --p-red:#fb7185;
   color-scheme: dark;
 }
 :root {
@@ -244,12 +251,7 @@ button { border-radius: 0 !important; }
     <!-- Newspaper masthead -->
     <div class="w-full max-w-6xl z-10 relative">
         <div class="paper-imprint">
-            <span class="paper-wordmark">
-                <span class="paper-mark"></span>
-                <span>رد پنل</span>
-                <span class="paper-wordmark-en">RED PANEL</span>
-            </span>
-            <span class="paper-edition" id="paper-sub-edition"></span>
+            <span class="rp-logo"><b>Red</b>&nbsp;Panel</span>
         </div>
         <div class="paper-pagebar">
             <div class="paper-page-title">
