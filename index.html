@@ -12,7 +12,7 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Vazirmatn', 'sans-serif'] },
-                    colors: { brand: { light: '#4f46e5', dark: '#818cf8' } }
+                    colors: { brand: { light: '#a64329', dark: '#e08b69' } }
                 }
             }
         }
@@ -21,6 +21,41 @@
         body { font-family: 'Vazirmatn', sans-serif; }
         .monospace-font { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace; direction: ltr; text-align: left; }
     </style>
+
+<style id="paper-docs-theme">
+:root {
+  --p-bg:#faf7f1; --p-surface:#f5f0e6; --p-raised:#fffdf8; --p-ink:#25251f;
+  --p-muted:#7e786b; --p-faint:#a09a8b; --p-line:#ded7ca; --p-strong-line:#3b3930;
+  --p-accent:#a64329; --p-accent-soft:#f2e6dc;
+}
+html.dark {
+  --p-bg:#191814; --p-surface:#24211b; --p-raised:#211f19; --p-ink:#f0e9db;
+  --p-muted:#b4aa98; --p-faint:#9b907d; --p-line:#484135; --p-strong-line:#c5bba8;
+  --p-accent:#e08b69; --p-accent-soft:#38281f;
+  color-scheme: dark;
+}
+body { background: var(--p-bg) !important; color: var(--p-ink) !important; }
+[class*="rounded"] { border-radius: 0 !important; }
+[class*="shadow"] { box-shadow: none !important; }
+header.sticky { border-bottom: 4px double var(--p-strong-line) !important; background: color-mix(in srgb, var(--p-bg) 88%, transparent) !important; }
+[class*="bg-white"] { background: var(--p-raised) !important; }
+[class*="bg-slate-1"] { background: var(--p-surface) !important; }
+[class*="bg-slate-5"] { background: var(--p-bg) !important; }
+[class*="bg-slate-8"], [class*="bg-slate-9"], [class*="dark:bg-[#080c14]"] { background: var(--p-raised) !important; }
+body[class*="bg-slate-50"] { background: var(--p-bg) !important; }
+.dark body, .dark body[class*="bg-slate"] { background: var(--p-bg) !important; }
+[class*="border-slate"] { border-color: var(--p-line) !important; }
+[class*="text-slate-9"], [class*="text-slate-8"] { color: var(--p-ink) !important; }
+[class*="text-slate-7"], [class*="text-slate-6"] { color: color-mix(in srgb, var(--p-ink) 74%, var(--p-muted)) !important; }
+[class*="text-slate-5"], [class*="text-slate-4"] { color: var(--p-muted) !important; }
+[class*="text-slate-3"] { color: var(--p-faint) !important; }
+[class*="text-indigo"] { color: var(--p-accent) !important; }
+[class*="bg-indigo"] { background: var(--p-accent) !important; }
+[class*="border-indigo"] { border-color: var(--p-accent) !important; }
+code, pre { border-color: var(--p-line) !important; }
+::selection { background: var(--p-accent); color: var(--p-bg); }
+</style>
+
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-[#080c14] dark:text-slate-300 antialiased min-h-screen transition-colors duration-300">
 
