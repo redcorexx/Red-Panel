@@ -463,6 +463,31 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* users table rows (horizontal scroll) */
+#tbl-users.u-list { display:flex; flex-direction:column; gap:12px; min-width:840px; }
+.u-row { display:flex; align-items:center; gap:16px; background:var(--color-surface); border:1px solid var(--color-border); border-radius:16px; padding:14px 16px; }
+.u-chk { width:18px; height:18px; accent-color:#f43f5e; flex:none; }
+.u-col-name { flex:0 0 170px; min-width:0; display:flex; flex-direction:column; gap:4px; }
+.u-name { font-weight:800; font-size:14px; color:var(--color-text); display:flex; gap:6px; align-items:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.u-flag { font-size:12px; }
+.u-sub { display:flex; align-items:center; gap:6px; color:var(--color-text-muted); font-size:10px; }
+.u-mini { display:flex; color:var(--color-text-muted); background:none; border:0; cursor:pointer; padding:2px; }
+.u-col-usage { flex:1 1 220px; min-width:170px; display:flex; flex-direction:column; gap:6px; }
+.u-used { font-size:13px; font-weight:800; color:var(--color-text); }
+.u-used em { font-style:normal; color:var(--color-text-muted); font-size:11px; font-weight:600; }
+.u-bar { height:6px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+html:not(.dark) .u-bar { background:rgba(0,0,0,.08); }
+.u-bar i { display:block; height:100%; background:linear-gradient(90deg,#f43f5e,#dc2637); border-radius:999px; }
+.u-pct { font-size:10px; color:var(--color-text-muted); font-weight:700; }
+.u-col-status { flex:0 0 130px; display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
+.u-date { color:var(--color-text-muted); font-size:10px; display:flex; align-items:center; gap:5px; }
+.u-reason { color:#fb7185; font-size:9px; font-weight:700; }
+.u-col-actions { flex:none; display:flex; gap:8px; margin-inline-start:auto; }
+.u-act { width:38px; height:38px; border:1px solid var(--color-border); border-radius:10px; background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#cbd5e1; transition:.15s; }
+.u-act:active { transform:scale(.93); }
+.u-act.pow { color:#fbbf24; background:rgba(251,191,36,.08); border-color:rgba(251,191,36,.3); }
+.u-act.del { color:#f87171; background:rgba(244,63,94,.08); border-color:rgba(244,63,94,.3); }
 /* endpoints accordion (red design) */
 .rp-acc{position:relative;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);border-radius:18px;margin-bottom:16px;break-inside:avoid}
 .rp-acc::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:#f43f5e;box-shadow:0 0 16px #f43f5e}
@@ -1551,7 +1576,7 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                                    </div>
                                </div>
                               <div class="overflow-x-auto">
-                                  <div id="tbl-users" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                                  <div id="tbl-users" class="u-list">
                                   </div>
                               </div>
                           </div>
@@ -3882,78 +3907,32 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                   // Short UUID for display
                   let shortUuid = u.id.substring(0, 8) + '...';
 
-                  tblHtml += `<div class="native-press bg-[var(--color-surface)] rounded-2xl border border-slate-200 dark:border-darkborder p-4 hover:shadow-md transition-shadow">
-                      <!-- Header: Name + Status + UUID -->
-                      <div class="flex items-center justify-between mb-2">
-                          <div class="flex items-center gap-2 min-w-0 flex-1">
-                              <span class="font-bold text-sm text-slate-800 dark:text-white truncate">${u.name}</span>
-                              ${u.proxyIpGeo ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-300 font-semibold shrink-0">${u.proxyIpGeo.flag}</span>` : ''}
-                          </div>
-                          ${statusBadge}
-                      </div>
-                      <!-- UUID row -->
-                      <div class="flex items-center gap-1.5 mb-3">
-                          <span class="text-[10px] text-slate-400 font-mono">${shortUuid}</span>
-                          <button onclick="copyToClipboard('${u.id}')" class="text-slate-400 hover:text-primary transition-colors" title="${copyUuidTitle}">
-                              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                          </button>
-                      </div>
-                      <!-- Badges -->
-                      <div class="flex flex-wrap gap-1 mb-3">
-                          ${u.isPaused && u.disabledReason ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-300">Auto-Disabled</span>` : ''}
-                          ${u.userMode ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-300">${u.userMode === 'alpha' ? 'VLESS' : u.userMode === 'beta' ? 'Trojan' : 'Both'}</span>` : ''}
-                          ${u.userPorts ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300">${u.userPorts}</span>` : ''}
-                           ${u.maxConfigs ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300">${u.maxConfigs} cfgs</span>` : ''}
-                           ${u.connLimit ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-300">${u.connLimit} conn</span>` : ''}
-                      </div>
-                      ${disableInfoHtml}
-                      <!-- Traffic Cards -->
-                      <div class="grid grid-cols-2 gap-3">
-                          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-2.5">
-                              <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">${totalLabel}</div>
-                              <div class="text-sm font-black text-slate-800 dark:text-white">${(userReqs/6000).toFixed(2)} <span class="text-[10px] font-semibold text-slate-400">GB</span></div>
-                              ${u.limitTotalReq ? `
-                              <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden mt-1.5">
-                                  <div class="bg-gradient-to-r ${parseFloat(perT) > 85 ? 'from-red-500 to-rose-600' : parseFloat(perT) > 60 ? 'from-amber-500 to-orange-500' : 'from-emerald-500 to-teal-500'} h-full rounded-full" style="width: ${perT}"></div>
-                              </div>
-                              <div class="flex items-center justify-between mt-1">
-                                  <span class="text-[9px] text-slate-400">/ ${(u.limitTotalReq/6000).toFixed(2)} GB</span>
-                                  ${perT !== '-' ? `<span class="text-[9px] font-bold ${parseFloat(perT) > 85 ? 'text-red-500' : parseFloat(perT) > 60 ? 'text-amber-500' : 'text-emerald-500'}">${perT}</span>` : ''}
-                              </div>
-                              ` : '<div class="text-[9px] text-slate-400 mt-1">' + unlimitedTxt + '</div>'}
-                          </div>
-                          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-2.5">
-                              <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1">${dailyLabel}</div>
-                              <div class="text-sm font-black text-slate-800 dark:text-white">${userDReqs} <span class="text-[10px] font-semibold text-slate-400">${rLabel}</span></div>
-                              ${u.limitDailyReq ? `
-                              <div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden mt-1.5">
-                                  <div class="bg-gradient-to-r ${parseFloat(perD) > 85 ? 'from-red-500 to-rose-600' : parseFloat(perD) > 60 ? 'from-amber-500 to-orange-500' : 'from-emerald-500 to-teal-500'} h-full rounded-full" style="width: ${perD}"></div>
-                              </div>
-                              <div class="flex items-center justify-between mt-1">
-                                  <span class="text-[9px] text-slate-400">/ ${(u.limitDailyReq/6000).toFixed(2)} GB</span>
-                                  ${perD !== '-' ? `<span class="text-[9px] font-bold ${parseFloat(perD) > 85 ? 'text-red-500' : parseFloat(perD) > 60 ? 'text-amber-500' : 'text-emerald-500'}">${perD}</span>` : ''}
-                              </div>
-                              ` : '<div class="text-[9px] text-slate-400 mt-1">' + unlimitedTxt + '</div>'}
-                          </div>
-                      </div>
-                      <!-- Expiry -->
-                      <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                          <span class="text-[10px] text-slate-400 flex items-center gap-1">
-                              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                              ${expTxt}
-                          </span>
-                      </div>
-                      <!-- Action Buttons -->
-                      <div class="flex items-center gap-1.5 mt-3">
-                          ${linkHtml}
-                          ${pauseBtnHtml}
-                          ${editBtnHtml}
-                          ${resetBtnHtml}
-                          ${deleteBtnHtml}
-                      </div>
-                      <input type="hidden" id="sync-${u.id}" value="${rawSync}">
-                  `;
-                  tblHtml += '</div>';
+                  tblHtml += `<div class="u-row">
+    <input type="checkbox" class="u-chk" onclick="event.stopPropagation()">
+    <div class="u-col-name">
+        <span class="u-name">${u.name}${u.proxyIpGeo ? ` <span class="u-flag">${u.proxyIpGeo.flag}</span>` : ''}</span>
+        <span class="u-sub"><span class="font-mono">${shortUuid}</span><button class="u-mini" onclick="copyToClipboard('${u.id}')" title="${copyUuidTitle}"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></span>
+    </div>
+    <div class="u-col-usage">
+        <span class="u-used">${(userReqs/6000).toFixed(2)} <em>/ ${u.limitTotalReq ? (u.limitTotalReq/6000).toFixed(2) + ' GB' : unlimitedTxt}</em></span>
+        <div class="u-bar"><i style="width:${perT === '-' ? '0%' : perT}"></i></div>
+        <span class="u-pct">${perT !== '-' ? perT + ' · ' + dailyLabel + ' ' + userDReqs + ' ' + rLabel : unlimitedTxt}</span>
+    </div>
+    <div class="u-col-status">
+        ${statusBadge}
+        <span class="u-date"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>${expTxt}</span>
+        ${isAutoDisabled ? `<span class="u-reason">${u.disabledReason}</span>` : ''}
+    </div>
+    <div class="u-col-actions">
+        <button class="u-act" onclick="copyData('sync-${u.id}')" title="${linkTitle}"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+        <button class="u-act" onclick="editUser('${u.id}')" title="${editTitle}"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button>
+        <button class="u-act" onclick="resetUserTraffic('${u.id}')" title="${resetTitle}"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        <button class="u-act pow" onclick="togglePauseUser('${u.id}')" title="${pauseTitle}"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v9m6.364-5.636a9 9 0 11-12.728 0"></path></svg></button>
+        <button class="u-act del" onclick="deleteUser('${u.id}')" title="${deleteTitle}"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+    </div>
+    <input type="hidden" id="sync-${u.id}" value="${rawSync}">
+</div>`;
+              
               });
               tbl.innerHTML = tblHtml;
               applyLang();
