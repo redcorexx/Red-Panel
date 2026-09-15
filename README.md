@@ -79,7 +79,10 @@ RedPanel isn't just a proxy script — it's a complete management solution desig
 
 ## 🚀 Quick Install Options
 
-For easier deployment you can run the interactive setup wizard:
+For easier deployment you can use:
+
+- **Web Installer (one-click):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) — deploys everything automatically from your browser
+- **Interactive CLI wizard:**
 
 ```bash
 bash setup.sh
@@ -197,6 +200,7 @@ Toggle in Advanced (or send `/pause` via Telegram) to immediately stop all proxy
 
 | Purpose | Resource |
 |---|---|
+| Web Installer | [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) |
 | Clean IP finder | [senpaiscanner](https://github.com/senpaiscanner) · [@itsZetaBot](https://t.me/itsZetaBot) |
 
 ---

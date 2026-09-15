@@ -81,7 +81,10 @@
 
 ## 🚀 گزینه‌های نصب سریع
 
-برای نصب آسان‌تر می‌توانید ویزارد نصب تعاملی را اجرا کنید:
+برای نصب آسان‌تر می‌توانید از این روش‌ها استفاده کنید:
+
+- **نصب‌کننده تحت وب (یک‌کلیک):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) — همه‌چیز را به‌صورت خودکار از مرورگر شما مستقر می‌کند
+- **ویزارد نصب تعاملی در ترمینال:**
 
 ```bash
 bash setup.sh
@@ -194,6 +197,7 @@ https://<آدرس-ورکر-شما>/sync/dash
 
 | کاربرد | منبع |
 |---|---|
+| نصب‌کننده وب | [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) |
 | پیدا کردن Clean IP | [senpaiscanner](https://github.com/senpaiscanner) · [@itsZetaBot](https://t.me/itsZetaBot) |
 
 ---
