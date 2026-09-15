@@ -96,6 +96,28 @@
         .modal-card { background: var(--card); border:1px solid var(--line); border-radius:20px; transform: scale(.95); transition: transform .3s; }
         #toast { background:#111827; color:#fff; border:1px solid var(--line); }
         html:not(.dark) #toast { background:#111827; color:#fff; }
+
+        /* accordion */
+        .acc { overflow:hidden; }
+        .acc::before { content:''; position:absolute; inset-inline-start:0; top:0; bottom:0; width:5px; background:#f43f5e; box-shadow:0 0 16px #f43f5e; }
+        .acc-head { display:flex; align-items:center; gap:14px; width:100%; background:none; border:0; cursor:pointer; padding:0; }
+        .acc-ico { flex:none; width:52px; height:52px; border-radius:14px; background:rgba(244,63,94,.1); color:#f43f5e; display:flex; align-items:center; justify-content:center; }
+        .acc-title { margin:0 0 6px; font-size:20px; font-weight:900; color:var(--text); }
+        .acc-badge { display:inline-block; padding:5px 12px; border-radius:999px; background:#1a2332; color:#9fb0c7; font-size:10px; font-weight:800; letter-spacing:.12em; }
+        html:not(.dark) .acc-badge { background:#e5e9f0; color:#475569; }
+        .sub-card { position:relative; overflow:hidden; background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; gap:12px; align-items:flex-start; margin-top:16px; }
+        .sub-card.green { border-color:rgba(16,185,129,.5); box-shadow:0 0 20px rgba(16,185,129,.1); }
+        .sub-card.green::before { content:''; position:absolute; inset-inline-start:0; top:0; bottom:0; width:4px; background:#10b981; }
+        .sc-ico { --c:#f43f5e; flex:none; width:48px; height:48px; border-radius:12px; background:color-mix(in srgb, var(--c) 14%, transparent); color:var(--c); display:flex; align-items:center; justify-content:center; }
+        .sc-label { margin:0 0 8px; font-size:11px; font-weight:800; letter-spacing:.12em; color:var(--muted); text-transform:uppercase; }
+        .qr-big { margin-top:16px; width:100%; display:flex; align-items:center; justify-content:center; gap:12px; background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:15px; color:var(--text); font-size:14px; font-weight:800; cursor:pointer; }
+        .qr-big .chev { margin-inline-start:auto; margin-inline-end:4px; }
+        .apps2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+        @media (max-width:480px){ .apps2 { grid-template-columns:1fr; } }
+        .app2 { --c:#8b5cf6; display:flex; align-items:center; gap:10px; border-radius:14px; padding:12px; text-decoration:none; border:1px solid color-mix(in srgb, var(--c) 40%, transparent); background:color-mix(in srgb, var(--c) 10%, transparent); }
+        .app2 .app-ico { width:40px; height:40px; font-size:16px; }
+        .cpbtn { margin-inline-start:auto; flex:none; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.04); border:1px solid var(--line2); border-radius:10px; padding:8px; color:#cbd5e1; cursor:pointer; }
+        html:not(.dark) .cpbtn { color:#475569; }
     </style>
 </head>
 <body class="fade-in">
@@ -220,48 +242,68 @@
             </div>
         </section>
 
-        <!-- ONE-CLICK IMPORT -->
-        <section class="card">
-            <div class="sec-head">
-                <svg class="bolt-ico" width="26" height="26" fill="currentColor" viewBox="0 0 24 24" style="margin-top:2px"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <div>
-                    <h4 class="import" data-i18n="oneClickImport">One-Click Import</h4>
-                    <p style="margin:0;font-size:12.5px;color:var(--muted)" data-i18n="advDesc">Advanced users can retrieve raw config blocks manually.</p>
+        <!-- USER ACCORDION -->
+        <section class="card acc">
+            <button class="acc-head" onclick="toggleAcc()">
+                <div class="acc-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                <div style="text-align:start">
+                    <h3 class="acc-title">__USER_NAME__</h3>
+                    <span class="acc-badge">MASTER</span>
+                </div>
+                <svg id="acc-chev" class="chev" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition:.25s"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+            </button>
+            <div id="acc-body">
+                <div class="sub-card">
+                    <div class="sc-ico" style="--c:#f43f5e"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg></div>
+                    <div style="flex:1;min-width:0">
+                        <p class="sc-label">UUID</p>
+                        <div class="fmt-row" dir="ltr">
+                            <input type="text" id="uuid-input" value="__USER_ID__" readonly>
+                            <button class="qrbtn" onclick="copyText(document.getElementById('uuid-input').value)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-card green">
+                    <div class="sc-ico" style="--c:#10b981"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                    <div style="flex:1;min-width:0">
+                        <p class="sc-label" style="color:#34d399;display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;display:inline-block"></span>UNIVERSAL SYNC URL</p>
+                        <div class="fmt-row" dir="ltr">
+                            <input type="text" id="link-normal" value="__SYNC_NORMAL__" readonly>
+                            <button class="qrbtn" onclick="copyText(document.getElementById('link-normal').value)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="qr-big" onclick="showQRModal(document.getElementById('link-normal').value)">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                    <span data-i18n="showQr">Show QR Code</span>
+                    <svg class="chev" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+                <div class="apps2">
+                    <a id="v2rayng-link" href="v2rayng://install-sub?url=__SYNC_NORMAL__&name=__USER_NAME__" class="app2" style="--c:#8b5cf6">
+                        <span class="app-ico" style="background:#6d28d9">V</span>
+                        <span class="app-name">v2rayNG</span>
+                        <button class="cpbtn" onclick="event.preventDefault();event.stopPropagation();copyText(this.closest('a').href)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </a>
+                    <a href="shadowrocket://add/sub://__SYNC_NORMAL_BASE64__?title=__USER_NAME__" class="app2" style="--c:#3b82f6">
+                        <span class="app-ico" style="background:#2563eb"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c4 3 6 7.5 6 12l-2.5 2.5L12 15l-3.5 1.5L6 14c0-4.5 2-9 6-12zm0 6a2 2 0 100 4 2 2 0 000-4zM8 18l-1.5 4L10 20zm8 0l1.5 4L14 20z"/></svg></span>
+                        <span class="app-name">Shadowrocket</span>
+                        <button class="cpbtn" onclick="event.preventDefault();event.stopPropagation();copyText(this.closest('a').href)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </a>
+                    <a href="streisand://import/__SYNC_NORMAL__" class="app2" style="--c:#10b981">
+                        <span class="app-ico" style="background:#059669">S</span>
+                        <span class="app-name">Streisand</span>
+                        <button class="cpbtn" onclick="event.preventDefault();event.stopPropagation();copyText(this.closest('a').href)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </a>
+                    <a href="v2rayn://install-sub?url=__SYNC_NORMAL__&name=__USER_NAME__" class="app2" style="--c:#8b5cf6">
+                        <span class="app-ico" style="background:#7c3aed">N</span>
+                        <span class="app-name">v2rayN</span>
+                        <button class="cpbtn" onclick="event.preventDefault();event.stopPropagation();copyText(this.closest('a').href)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </a>
                 </div>
             </div>
-            <div class="apps">
-                <a id="v2rayng-link" href="v2rayng://install-sub?url=__SYNC_NORMAL__&name=__USER_NAME__" class="app">
-                    <span class="app-ico" style="background:#2f7df6">V</span>
-                    <span class="app-name">v2rayNG</span>
-                    <svg class="ext" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-                <a href="v2rayn://install-sub?url=__SYNC_NORMAL__&name=__USER_NAME__" class="app">
-                    <span class="app-ico" style="background:#6d28d9">N</span>
-                    <span class="app-name">v2rayN</span>
-                    <svg class="ext" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-                <a href="shadowrocket://add/sub://__SYNC_NORMAL_BASE64__?title=__USER_NAME__" class="app">
-                    <span class="app-ico" style="background:#10b981"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c4 3 6 7.5 6 12l-2.5 2.5L12 15l-3.5 1.5L6 14c0-4.5 2-9 6-12zm0 6a2 2 0 100 4 2 2 0 000-4zM8 18l-1.5 4L10 20zm8 0l1.5 4L14 20z"/></svg></span>
-                    <span class="app-name">Shadowrocket</span>
-                    <svg class="ext" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-                <a href="streisand://import/__SYNC_NORMAL__" class="app">
-                    <span class="app-ico" style="background:#b45309">S</span>
-                    <span class="app-name">Streisand</span>
-                    <svg class="ext" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                </a>
-            </div>
-            <div class="divider"></div>
-            <div class="advrow">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                <span data-i18n="advDesc">Advanced users can retrieve raw config blocks manually.</span>
-            </div>
-            <button class="rawbtn" onclick="fetchDecodedRawContent()">
-                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                <span data-i18n="parsedContent">Retrieve Raw Content</span>
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </button>
-            <input type="text" id="link-raw" value="__SYNC_RAW__" class="hidden">
         </section>
     </div>
 
@@ -314,7 +356,8 @@
                 formatsDesc: 'Use these links to explicitly request specific configuration formats.',
                 advDesc: 'Advanced users can retrieve raw config blocks manually.',
                 helpTitle: 'Help & Support',
-                helpDesc: 'Having trouble connecting? Keep your clients updated or contact support for assistance.'
+                helpDesc: 'Having trouble connecting? Keep your clients updated or contact support for assistance.',
+                showQr: 'Show QR Code'
             },
             fa: {
                 totalUsage: 'مصرف کل',
@@ -347,7 +390,8 @@
                 formatsDesc: 'از این لینک‌ها برای درخواست مستقیم فرمت‌های خاص پیکربندی استفاده کنید.',
                 advDesc: 'کاربران پیشرفته می‌توانند بلوک‌های پیکربندی خام را دستی دریافت کنند.',
                 helpTitle: 'راهنما و پشتیبانی',
-                helpDesc: 'برای اتصال مشکل دارید؟ کلاینت‌ها را به‌روز نگه دارید یا با پشتیبانی تماس بگیرید.'
+                helpDesc: 'برای اتصال مشکل دارید؟ کلاینت‌ها را به‌روز نگه دارید یا با پشتیبانی تماس بگیرید.',
+                showQr: 'نمایش کد QR'
             }
         };
 
@@ -555,5 +599,19 @@
 })();
 </script>
 
+
+<script>
+        function copyText(t) {
+            navigator.clipboard.writeText(t);
+            showToast(I18N[currentLang].copied);
+        }
+        function toggleAcc() {
+            var b = document.getElementById('acc-body');
+            var c = document.getElementById('acc-chev');
+            var hidden = b.style.display === 'none';
+            b.style.display = hidden ? '' : 'none';
+            c.style.transform = hidden ? '' : 'rotate(180deg)';
+        }
+</script>
 </body>
 </html>
