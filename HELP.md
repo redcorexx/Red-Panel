@@ -1,8 +1,8 @@
-# Project Nahan (نهان) — User Walkthrough
+# Red Panel (رد پنل) — User Walkthrough
 
 > 🇮🇷 [راهنمای فارسی / Persian Version](./HELP_FA.md) | 📖 [Back to README](./README.md)
 
-This guide walks you through every screen and setting in the Nahan dashboard after your gateway is deployed. If you haven't deployed yet, start with the [README](./README.md).
+This guide walks you through every screen and setting in the Red Panel dashboard after your gateway is deployed. If you haven't deployed yet, start with the [README](./README.md).
 
 ---
 
@@ -219,7 +219,7 @@ The IP used for internal DNS resolution fallback. Default: `1.1.1.1`.
 
 ### Cascade (Slave Nodes)
 
-Connect multiple Nahan workers together. Enter the subscription URL of another Nahan instance (a "slave node") here. The master node will fetch and merge that slave's configs into its own subscription output, giving users all configs in one link.
+Connect multiple Red Panel workers together. Enter the subscription URL of another Red Panel instance (a "slave node") here. The master node will fetch and merge that slave's configs into its own subscription output, giving users all configs in one link.
 
 ```
 https://slave-worker.workers.dev/sync/sub
@@ -376,12 +376,12 @@ Once your bot is configured in the Advanced tab, these commands are available:
 
 **Free tier limits.** The Cloudflare free plan allows 100,000 Worker requests per day. Each proxy connection typically generates multiple requests (WebSocket frames). Monitor usage via the Analytics integration.
 
-**Updating Nahan.** To upgrade to a newer version, simply paste the new `_worker.js` into the Worker editor and redeploy. Your D1 database and all configuration are untouched.
+**Updating RedPanel.** To upgrade to a newer version, simply paste the new `_worker.js` into the Worker editor and redeploy. Your D1 database and all configuration are untouched.
 
 ---
 
 <div align="center">
 
-[📖 README](./README.md) · [🇮🇷 راهنمای فارسی](./HELP_FA.md) · [⭐ Star on GitHub](https://github.com/itsyebekhe/nahan)
+[📖 README](./README.md) · [🇮🇷 راهنمای فارسی](./HELP_FA.md) · [⭐ Star on GitHub](https://github.com/redcorexx/Red-Panel)
 
 </div>

@@ -1,7 +1,7 @@
 import { connect } from "cloudflare:sockets";
 
 /*
- * Project Nahan (نهان) - IoT Device Telemetry Gateway
+ * Red Panel (رد پنل) - IoT Device Telemetry Gateway
  * Handles real-time binary streams from remote sensor nodes.
  */
 
@@ -51,7 +51,7 @@ const SYSTEM_DEFAULTS = {
     cfWorkerName: "",
     isPaused: false,
     silentAlerts: false,
-    githubRepo: "itsyebekhe/nahan",
+    githubRepo: "redcorexx/Red-Panel",
     nameStrategy: "default",
     namePrefix: "Core",
     tgBotLang: "fa",
@@ -318,7 +318,7 @@ function isAuthorized(request, data) {
 
 function generateApiKey(name) {
     const id = crypto.randomUUID();
-    const raw = `nahan_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+    const raw = `redpanel_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
     const key = raw;
     return {
         id,
@@ -498,7 +498,7 @@ export default {
 
             if (!isTelemetryStream) {
                 if (reqPath === routes.dash) {
-                    const dashboardUrl = env.DASHBOARD_URL || 'https://raw.githubusercontent.com/itsyebekhe/nahan/main/dashboard.html';
+                    const dashboardUrl = env.DASHBOARD_URL || 'https://raw.githubusercontent.com/redcorexx/Red-Panel/main/dashboard.html';
                     try {
                         const resp = await fetch(dashboardUrl);
                         let html = await resp.text();
@@ -635,7 +635,7 @@ export default {
 
                     if (isRealBrowser && !isCustomUaAllowed) {
                         if (isValidUser) {
-                            const subscriptionUrl = env.SUBSCRIPTION_URL || 'https://raw.githubusercontent.com/itsyebekhe/nahan/main/subscription.html';
+                            const subscriptionUrl = env.SUBSCRIPTION_URL || 'https://raw.githubusercontent.com/redcorexx/Red-Panel/main/subscription.html';
                             try {
                                 const resp = await fetch(subscriptionUrl);
                                 let html = await resp.text();
@@ -938,7 +938,7 @@ export default {
         try {
             await loadSysConfig(env, ctx);
             if (sysConfig.autoUpdate && sysConfig.cfAccountId && sysConfig.cfApiToken && sysConfig.cfWorkerName) {
-                const repo = (sysConfig.githubRepo || "itsyebekhe/nahan")
+                const repo = (sysConfig.githubRepo || "redcorexx/Red-Panel")
                     .replace(/https?:\/\/github\.com\//, "")
                     .trim();
                 let remoteVer = null;
@@ -1848,7 +1848,7 @@ async function handleUpdateApi(request, env, ctx) {
         const accountId = sysConfig.cfAccountId;
         const apiToken = sysConfig.cfApiToken;
         const workerName = sysConfig.cfWorkerName;
-        const repo = (sysConfig.githubRepo || "itsyebekhe/nahan")
+        const repo = (sysConfig.githubRepo || "redcorexx/Red-Panel")
             .replace(/https?:\/\/github\.com\//, "")
             .trim();
 
@@ -2648,7 +2648,7 @@ async function handleSyncPanel(request, env, ctx) {
 const botI18n = {
     en: {
         welcome:
-            "🤖 **Welcome to Nahan Gateway Bot**\nSelect your option below to manage your system:",
+            "🤖 **Welcome to Red Panel Bot**\nSelect your option below to manage your system:",
         status: "System Status",
         users: "Subscribers",
         metrics: "Gateway Health",
@@ -2796,7 +2796,7 @@ const botI18n = {
     },
     fa: {
         welcome:
-            "🤖 **به ربات ترانزیت نهان خوش آمدید**\nجهت مدیریت سیستم نظارتی خود یکی از گزینه‌های زیر را انتخاب نمایید:",
+            "🤖 **به ربات ترانزیت رد پنل خوش آمدید**\nجهت مدیریت سیستم نظارتی خود یکی از گزینه‌های زیر را انتخاب نمایید:",
         status: "وضعیت سیستم",
         users: "مدیریت مشترکین",
         metrics: "سلامت درگاه شبکه",
@@ -7386,7 +7386,7 @@ let singboxTemplate = null;
 let VTemplate = null;
 
 async function fetchTemplates(env) {
-    const repo = sysConfig.githubRepo || "itsyebekhe/nahan";
+    const repo = sysConfig.githubRepo || "redcorexx/Red-Panel";
     if (!clashTemplate) {
         try {
             let res = await fetch(`https://raw.githubusercontent.com/${repo}/main/clash.yml`);

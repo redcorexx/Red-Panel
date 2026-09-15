@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # ==============================================================================
-#             NAHAN GATEWAY PREMIUM INTERACTIVE SETUP WIZARD
+#             RED PANEL PREMIUM INTERACTIVE SETUP WIZARD
 # ==============================================================================
 # A professional, high-end, highly stylized interactive CLI automation tool
-# for provisioning, deploying, and destroying Project Nahan on Cloudflare Edge.
+# for provisioning, deploying, and destroying Red Panel on Cloudflare Edge.
 # Includes automatic dependency checks, cross-platform OS package management,
 # and high-contrast framed ANSI visual styles with clear menu path routers.
 # ==============================================================================
@@ -32,7 +32,7 @@ ASK="${MAGENTA}[?]${NC}"
 # Temp files and SIGINT/SIGTERM configuration
 trap cleanup EXIT SIGINT SIGTERM
 cleanup() {
-    rm -f /tmp/nahan_cmd.log
+    rm -f /tmp/redpanel_cmd.log
 }
 
 # Terminal loading/spinner utility
@@ -55,7 +55,7 @@ run_with_spinner() {
     local message="$1"
     shift
     echo -ne "$message"
-    "$@" > /tmp/nahan_cmd.log 2>&1 &
+    "$@" > /tmp/redpanel_cmd.log 2>&1 &
     local pid=$!
     spinner "$pid"
     wait "$pid"
@@ -63,7 +63,7 @@ run_with_spinner() {
     if [ $exit_status -ne 0 ]; then
         echo -e " ${RED}${BOLD}[FAILED]${NC}"
         echo -e "\n${RED}──────────────────── ERROR LOG TRACE ────────────────────${NC}"
-        cat /tmp/nahan_cmd.log
+        cat /tmp/redpanel_cmd.log
         echo -e "${RED}─────────────────────────────────────────────────────────${NC}\n"
         echo -e " ${WARN} Press [Enter] to acknowledge this error and continue..."
         read -r
@@ -87,7 +87,7 @@ show_header() {
 EOF
     echo -e "${NC}"
     echo -e "${CYAN}┌────────────────────────────────────────────────────────────────────────┐${NC}"
-    echo -e "${CYAN}│${NC}               ${BOLD}Nahan Edge Gateway Installer — Premium Edition${NC}          ${CYAN}│${NC}"
+    echo -e "${CYAN}│${NC}               ${BOLD}Red Panel Edge Gateway Installer — Premium Edition${NC}          ${CYAN}│${NC}"
     echo -e "${CYAN}└────────────────────────────────────────────────────────────────────────┘${NC}"
 }
 
@@ -293,7 +293,7 @@ check_wrangler() {
 # ==============================================================================
 #                 INSTALLATION & DEPLOYMENT ROUTINE
 # ==============================================================================
-install_nahan() {
+install_redpanel() {
     # ─── PHASE 1 ───
     clear
     show_header
@@ -337,16 +337,16 @@ install_nahan() {
 
     echo ""
     if run_with_spinner " ${INFO} Requesting Cloudflare API to provision D1 Database '$DB_NAME'..." npx wrangler d1 create "$DB_NAME"; then
-        D1_OUTPUT=$(cat /tmp/nahan_cmd.log)
+        D1_OUTPUT=$(cat /tmp/redpanel_cmd.log)
         DB_ID=$(echo "$D1_OUTPUT" | grep -oE "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" | head -n1)
     else
-        D1_OUTPUT=$(cat /tmp/nahan_cmd.log)
+        D1_OUTPUT=$(cat /tmp/redpanel_cmd.log)
         # Handle pre-existing database scenarios
         if echo "$D1_OUTPUT" | grep -qE "already exists|already_exists" 2>/dev/null; then
             echo -e " ${WARN} The database name '${CYAN}$DB_NAME${NC}' already exists in your Cloudflare account."
             
             if run_with_spinner " ${INFO} Retrieving available D1 database details..." npx wrangler d1 list --json; then
-                D1_LIST_OUTPUT=$(cat /tmp/nahan_cmd.log)
+                D1_LIST_OUTPUT=$(cat /tmp/redpanel_cmd.log)
                 
                 # Use Node engine to parse JSON precisely and guarantee robust extraction
                 DB_ID=$(node -e "
@@ -391,9 +391,9 @@ install_nahan() {
     clear
     show_header
     echo -e "\n${BOLD}${MAGENTA}─── [ PHASE 4 ] COMPILED SPECIFICATION GENERATION ───${NC}\n"
-    echo -e " ${ASK} Define a name for your Cloudflare Edge Worker [Default: nahan-core]: "
+    echo -e " ${ASK} Define a name for your Cloudflare Edge Worker [Default: redpanel-core]: "
     read -p " ❯ " WORKER_NAME
-    WORKER_NAME=${WORKER_NAME:-nahan-core}
+    WORKER_NAME=${WORKER_NAME:-redpanel-core}
 
     echo -e "\n ${INFO} Formatting environment specifications..."
     echo -e "     • Core Instance Name : ${CYAN}$WORKER_NAME${NC}"
@@ -404,7 +404,7 @@ install_nahan() {
 
     # Write wrangler.toml to project directory
     cat <<EOF > wrangler.toml
-# Production wrangler.toml compiled automatically by Nahan Setup Script
+# Production wrangler.toml compiled automatically by Red Panel Setup Script
 name = "$WORKER_NAME"
 main = "_worker.js"
 compatibility_date = "2023-10-30"
@@ -428,7 +428,7 @@ EOF
     DEPLOY_URL=""
 
     if run_with_spinner " ${INFO} Uploading scripts, linking bindings, and activating Edge nodes..." npx wrangler deploy; then
-        DEPLOY_OUTPUT=$(cat /tmp/nahan_cmd.log)
+        DEPLOY_OUTPUT=$(cat /tmp/redpanel_cmd.log)
         DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -oE "https://[a-zA-Z0-9._-]+\.workers\.dev" | head -n1)
     else
         echo -e "\n ${ERR} Deployment encountered an execution error."
@@ -440,7 +440,7 @@ EOF
     # Manual worker URL resolution
     if [ -z "$DEPLOY_URL" ]; then
         echo -e "\n ${WARN} Script compiled successfully, but deployment URL was not output by Wrangler."
-        echo -e " ${ASK} Please enter your Worker Domain manually (e.g. nahan.username.workers.dev):"
+        echo -e " ${ASK} Please enter your Worker Domain manually (e.g. redpanel.username.workers.dev):"
         read -p " ❯ " USER_URL
         if [[ ! "$USER_URL" =~ ^https:// ]]; then
             DEPLOY_URL="https://$USER_URL"
@@ -452,7 +452,7 @@ EOF
     DEPLOY_URL=$(echo "$DEPLOY_URL" | sed 's/\/$//')
 
     echo -e "\n ${OK} Deployment finalized successfully!"
-    echo -e " ${OK} Press [Enter] to access the Nahan Control Dashboard..."
+    echo -e " ${OK} Press [Enter] to access the Red Panel Control Dashboard..."
     read -r
 
     # ─── PHASE 6 ───
@@ -509,7 +509,7 @@ EOF
     const nc = '\x1b[0m';
 
     console.log(cyan + '┌' + '─'.repeat(76) + '┐' + nc);
-    console.log(padLine('          🚀   CONGRATULATIONS! NAHAN EDGE GATEWAY IS ONLINE!   🚀        '));
+    console.log(padLine('          🚀   CONGRATULATIONS! RED PANEL EDGE GATEWAY IS ONLINE!   🚀        '));
     console.log(cyan + '├' + '─'.repeat(76) + '┤' + nc);
     console.log(padLine(green + '[+]' + nc + ' Dependencies Verified'));
     console.log(padLine(green + '[+]' + nc + ' Secure SSO Authentication Completed'));
@@ -539,10 +539,10 @@ EOF
 # ==============================================================================
 #                 UNINSTALLATION & TEARDOWN ROUTINE
 # ==============================================================================
-uninstall_nahan() {
+uninstall_redpanel() {
     clear
     show_header
-    echo -e "\n${BOLD}${RED}─── [ DESTRUCTION WIZARD ] REMOVE NAHAN FROM CLOUDFLARE ───${NC}\n"
+    echo -e "\n${BOLD}${RED}─── [ DESTRUCTION WIZARD ] REMOVE RED PANEL FROM CLOUDFLARE ───${NC}\n"
 
     # Render Destruction warning box beautifully via Node
     node -e "
@@ -577,7 +577,7 @@ uninstall_nahan() {
     console.log(cyan + '┌' + '─'.repeat(76) + '┐' + nc);
     console.log(padLine('⚠️  ' + red + bold + 'WARNING: PERMANENT WIPE DESTRUCTION ACTION' + nc));
     console.log(cyan + '├' + '─'.repeat(76) + '┤' + nc);
-    console.log(padLine('This wizard will permanently tear down your Nahan Worker, drop the'));
+    console.log(padLine('This wizard will permanently tear down your Red Panel Worker, drop the'));
     console.log(padLine('D1 SQLite Database, delete all user traffic quotas, and delete the'));
     console.log(padLine('local wrangler.toml file from this directory.'));
     console.log(padLine(''));
@@ -586,7 +586,7 @@ uninstall_nahan() {
     "
     echo ""
 
-    echo -e " ${ASK} Are you absolutely sure you want to completely wipe Nahan from Cloudflare? (y/n)"
+    echo -e " ${ASK} Are you absolutely sure you want to completely wipe RedPanel from Cloudflare? (y/n)"
     read -p " ❯ " double_confirm_1
     if [[ ! "$double_confirm_1" =~ ^[Yy]$ ]]; then
         echo -e "\n ${OK} Uninstall cancelled. Returning to main menu..."
@@ -614,9 +614,9 @@ uninstall_nahan() {
 
     if [ -z "$WORKER_NAME" ]; then
         echo -e " ${WARN} Could not locate Worker Name in wrangler.toml."
-        echo -e " ${ASK} Please input the Cloudflare Worker name to destroy [Default: nahan-core]:"
+        echo -e " ${ASK} Please input the Cloudflare Worker name to destroy [Default: redpanel-core]:"
         read -p " ❯ " WORKER_NAME
-        WORKER_NAME=${WORKER_NAME:-nahan-core}
+        WORKER_NAME=${WORKER_NAME:-redpanel-core}
     else
         echo -e "  ${OK} Detected Worker: ${CYAN}$WORKER_NAME${NC}"
     fi
@@ -722,7 +722,7 @@ EOF
     }
 
     console.log(cyan + '┌' + '─'.repeat(76) + '┐' + nc);
-    console.log(padLine('💥  ' + red + bold + 'NAHAN UNINSTALLATION OPERATIONS SUMMARY' + nc));
+    console.log(padLine('💥  ' + red + bold + 'RED PANEL UNINSTALLATION OPERATIONS SUMMARY' + nc));
     console.log(cyan + '├' + '─'.repeat(76) + '┤' + nc);
     console.log(padLine(
         (workerDel ? red + '[-] ' + nc : '\x1b[1;33m[!] ' + nc) +
@@ -792,8 +792,8 @@ main_menu() {
         console.log(padLine(magenta + '[?]' + nc + ' ' + bold + 'SELECT SETUP ROUTE:' + nc));
         console.log(cyan + '├' + '─'.repeat(76) + '┤' + nc);
         console.log(padLine(''));
-        console.log(padLine('  ' + green + '1)' + nc + '  🚀  Install / Deploy Nahan Project to Cloudflare Edge'));
-        console.log(padLine('  ' + red + '2)' + nc + '  💀  Uninstall / Wipe Nahan Project from Cloudflare'));
+        console.log(padLine('  ' + green + '1)' + nc + '  🚀  Install / Deploy Red Panel Project to Cloudflare Edge'));
+        console.log(padLine('  ' + red + '2)' + nc + '  💀  Uninstall / Wipe Red Panel Project from Cloudflare'));
         console.log(padLine('  ' + yellow + '3)' + nc + '  🚪  Exit Setup Wizard'));
         console.log(padLine(''));
         console.log(cyan + '└' + '─'.repeat(76) + '┘' + nc);
@@ -803,14 +803,14 @@ main_menu() {
         read -p " ❯ " choice
         case "$choice" in
             1)
-                install_nahan
+                install_redpanel
                 ;;
             2)
-                uninstall_nahan
+                uninstall_redpanel
                 ;;
             3)
                 clear
-                echo -e "\n ${OK} Thank you for using Nahan Gateway Installer. Safe travels! 👋\n"
+                echo -e "\n ${OK} Thank you for using Red Panel Gateway Installer. Safe travels! 👋\n"
                 exit 0
                 ;;
             *)

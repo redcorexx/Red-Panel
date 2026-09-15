@@ -1,14 +1,14 @@
 <div dir="rtl">
 
-# پروژه نهان (Project Nahan)
+# پروژه رد پنل (Red Panel)
 
 ### قدرتمندترین دروازه بدون سرور روی Cloudflare Workers
 
-**نهان** (به معنای *پنهان/مخفی*) یک پروکسی معکوس امن، سبک و قابل سفارشی‌سازی است که به طور کامل روی Edge اجرا می‌شود. این پروژه Worker کلودفلر شما را به یک دروازه قدرتمند و مبهم با پشتیبانی از پروتکل‌های **VLESS** و **Trojan** تبدیل می‌کند که از طریق یک داشبورد زیبا و خودکفا مدیریت می‌شود.
+**رد پنل** (به معنای *پرد پنل/مخفی*) یک پروکسی معکوس امن، سبک و قابل سفارشی‌سازی است که به طور کامل روی Edge اجرا می‌شود. این پروژه Worker کلودفلر شما را به یک دروازه قدرتمند و مبهم با پشتیبانی از پروتکل‌های **VLESS** و **Trojan** تبدیل می‌کند که از طریق یک داشبورد زیبا و خودکفا مدیریت می‌شود.
 
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](./LICENSE)
-[![JavaScript](https://img.shields.io/badge/JavaScript-100%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/itsyebekhe/nahan/blob/main/_worker.js)
+[![JavaScript](https://img.shields.io/badge/JavaScript-100%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/redcorexx/Red-Panel/blob/main/_worker.js)
 
 > 🌐 [English Version / نسخه انگلیسی](./README.md)
 
@@ -16,7 +16,7 @@
 
 ## 📖 فهرست مطالب
 
-- [چرا نهان؟](#-چرا-نهان)
+- [چرا رد پنل؟](#-چرا-رد پنل)
 - [ویژگی‌های کلیدی](#-ویژگیهای-کلیدی)
 - [پیش‌نیازها](#-پیشنیازها)
 - [گزینه‌های نصب سریع](#-گزینههای-نصب-سریع)
@@ -31,11 +31,11 @@
 
 ---
 
-## 🌟 چرا نهان؟
+## 🌟 چرا رد پنل؟
 
-نهان فقط یک اسکریپت پروکسی نیست — یک راه‌حل مدیریت کامل است که برای **مخفی‌کاری**، **سرعت** و **سادگی** طراحی شده.
+رد پنل فقط یک اسکریپت پروکسی نیست — یک راه‌حل مدیریت کامل است که برای **مخفی‌کاری**، **سرعت** و **سادگی** طراحی شده.
 
-- 🛡️ **پنهان در دید عموم:** درخواست‌های غیرمجاز به طور خودکار به سایت‌های معتبر (مثل `ubuntu.com` یا `docker.com`) هدایت می‌شوند.
+- 🛡️ **پرد پنل در دید عموم:** درخواست‌های غیرمجاز به طور خودکار به سایت‌های معتبر (مثل `ubuntu.com` یا `docker.com`) هدایت می‌شوند.
 - ⚡ **بدون هزینه سرور:** کاملاً روی پلن رایگان Cloudflare اجرا می‌شود.
 - 🎨 **داشبورد مدرن:** رابط کاربری واکنش‌گرا با پشتیبانی از حالت تاریک/روشن و دو زبانه (انگلیسی/فارسی).
 - 🤖 **ربات تلگرام:** مدیریت دروازه، بررسی مصرف و دریافت هشدارهای ورود.
@@ -81,8 +81,11 @@
 
 ## 🚀 گزینه‌های نصب سریع
 
-- **ربات تلگرام نصب:** [@itsyebekhebot](https://t.me/itsyebekhebot)
-- **نصب‌کننده تحت وب:** [https://erpycode.github.io/nahan-installer/](https://erpycode.github.io/nahan-installer/)
+برای نصب آسان‌تر می‌توانید ویزارد نصب تعاملی را اجرا کنید:
+
+```bash
+bash setup.sh
+```
 
 یا مراحل دستی زیر را دنبال کنید.
 
@@ -99,8 +102,8 @@
 ### گام ۲: استقرار Worker
 
 1. به **Workers & Pages** → **Create application** → **Create Worker** بروید.
-2. نامی بگذارید (مثلاً `nahan-core`) و Deploy کنید.
-3. **Edit code** را باز کنید، کد placeholder را پاک کنید و محتوای کامل [`_worker.js`](https://github.com/itsyebekhe/nahan/blob/main/_worker.js) را پیست کنید.
+2. نامی بگذارید (مثلاً `redpanel-core`) و Deploy کنید.
+3. **Edit code** را باز کنید، کد placeholder را پاک کنید و محتوای کامل [`_worker.js`](https://github.com/redcorexx/Red-Panel/blob/main/_worker.js) را پیست کنید.
 4. **Save and Deploy** بزنید.
 
 ### گام ۳: اتصال دیتابیس D1
@@ -156,11 +159,11 @@ https://<آدرس-ورکر-شما>/sync/dash
 
 ### Relay IP
 
-ربات پیشنهادی: [@nahanproxyipbot](https://t.me/nahanproxyipbot)
+آی‌پی رله/پروکسی خود را در تنظیمات پنل (یا از طریق متغیر محیطی `RELAY_IP`) وارد کنید.
 
 ### پنل‌های لینک‌شده (Other Nodes)
 
-اتصال پنل‌های نهان دیگر با **URL + API Key** برای مدیریت متمرکز و انتشار بروزرسانی.  
+اتصال پنل‌های رد پنل دیگر با **URL + API Key** برای مدیریت متمرکز و انتشار بروزرسانی.  
 (فیلدهای قدیمی `slaveNodes` / Cascade به‌طور خودکار به `linkedPanels` مهاجرت می‌شوند.)
 
 ### پروفایل چند کاربره
@@ -192,9 +195,6 @@ https://<آدرس-ورکر-شما>/sync/dash
 | کاربرد | منبع |
 |---|---|
 | پیدا کردن Clean IP | [senpaiscanner](https://github.com/senpaiscanner) · [@itsZetaBot](https://t.me/itsZetaBot) |
-| Relay IP | [@nahanproxyipbot](https://t.me/nahanproxyipbot) |
-| نصب آسان (تلگرام) | [@itsyebekhebot](https://t.me/itsyebekhebot) |
-| نصب‌کننده وب | [erpycode.github.io/nahan-installer](https://erpycode.github.io/nahan-installer/) |
 
 ---
 
@@ -244,7 +244,7 @@ https://<آدرس-ورکر-شما>/sync/dash
 
 ساخته شده با ❤️ توسط جامعه متن‌باز
 
-[⭐ ستاره بدهید](https://github.com/itsyebekhe/nahan) · [🐛 گزارش خطا](https://github.com/itsyebekhe/nahan/issues) · [🌐 نسخه انگلیسی](./README.md)
+[⭐ ستاره بدهید](https://github.com/redcorexx/Red-Panel) · [🐛 گزارش خطا](https://github.com/redcorexx/Red-Panel/issues) · [🌐 نسخه انگلیسی](./README.md)
 
 </div>
 

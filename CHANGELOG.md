@@ -1,10 +1,10 @@
 # گزارش تغییرات | Changelog
 
 <!-- LANG:FA -->
-تمام تغییرات و بروزرسانی‌های پروژه نهان (Project Nahan) در این فایل مستند خواهند شد.
+تمام تغییرات و بروزرسانی‌های پروژه رد پنل (Red Panel) در این فایل مستند خواهند شد.
 <!-- LANG:FA -->
 <!-- LANG:EN -->
-All notable changes to Project Nahan will be documented in this file.
+All notable changes to Red Panel will be documented in this file.
 <!-- LANG:EN -->
 
 
@@ -237,7 +237,7 @@ All notable changes to Project Nahan will be documented in this file.
 - **حل خطای فلگ سازگاری کلودفلر**: برطرف کردن خطای بروزرسانی و استقرار خودکار پنل کلودفلر با جایگزینی فلگ منسوخ‌شده `unsafe-eval` با فلگ پیشرفته `allow_eval_during_startup` جهت عدم بروز کرش در شروع به کار.
 
 ### بهبود یافته (Improved)
-- **پایداری فرم‌‌ها و اشتراک**: افزایش پایداری و اصلاح کنترل اعتبارهای سمت سرور و فرانت‌اند برای ارتقای امنیت و سرعت پنل نهان.
+- **پایداری فرم‌‌ها و اشتراک**: افزایش پایداری و اصلاح کنترل اعتبارهای سمت سرور و فرانت‌اند برای ارتقای امنیت و سرعت پنل رد پنل.
 <!-- LANG:FA -->
 
 <!-- LANG:EN -->

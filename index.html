@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مستندات پیاده‌سازی پنل نهان</title>
+    <title>مستندات پیاده‌سازی پنل رد پنل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -28,7 +28,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                <span class="font-extrabold text-slate-900 dark:text-white tracking-tight text-lg">نهان / مستندات فنی و مصور</span>
+                <span class="font-extrabold text-slate-900 dark:text-white tracking-tight text-lg">رد پنل / مستندات فنی و مصور</span>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">v3.0.1</span>
             </div>
             <div class="flex items-center gap-3">
@@ -40,7 +40,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                     </svg>
                 </button>
-                <a href="https://github.com/itsyebekhe/nahan/" target="_blank" class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">گیت‌هاب پروژه &larr;</a>
+                <a href="https://github.com/redcorexx/Red-Panel/" target="_blank" class="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">گیت‌هاب پروژه &larr;</a>
             </div>
         </div>
     </header>
@@ -72,9 +72,9 @@
             <main class="col-span-1 lg:col-span-9 space-y-16">
 
                 <section id="intro" class="space-y-4">
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">معرفی پروژه نهان</h2>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">معرفی پروژه رد پنل</h2>
                     <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed text-justify">
-                        پروژه <strong>نهان (Nahan)</strong> یک راهکار توزیع ترافیک و پروکسی معکوس بدون سرور (Serverless) در بستر کلودفلر است. در این ساختار بدون نیاز به تهیه سرور مجازی شخصی (VPS)، با استفاده از معماری لبه کلودفلر و پایگاه داده با کارایی بالای SQLite D1، ترافیک شبکه‌ی کاربران به صورتی همگام و ایمن در بستر اینترنت هدایت می‌شود.
+                        پروژه <strong>رد پنل (Red Panel)</strong> یک راهکار توزیع ترافیک و پروکسی معکوس بدون سرور (Serverless) در بستر کلودفلر است. در این ساختار بدون نیاز به تهیه سرور مجازی شخصی (VPS)، با استفاده از معماری لبه کلودفلر و پایگاه داده با کارایی بالای SQLite D1، ترافیک شبکه‌ی کاربران به صورتی همگام و ایمن در بستر اینترنت هدایت می‌شود.
                     </p>
                 </section>
 
@@ -288,7 +288,7 @@
                             </div>
                             <div class="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1">
                                 <strong class="text-slate-900 dark:text-slate-200">بهینه‌سازهای TCP Fast Open و ECH:</strong>
-                                <p class="text-slate-500">افزایش سرعت هندشیک اولیه و پنهان‌سازی اطلاعات SNI ارسالی به مقصد کلودفلر.</p>
+                                <p class="text-slate-500">افزایش سرعت هندشیک اولیه و پرد پنل‌سازی اطلاعات SNI ارسالی به مقصد کلودفلر.</p>
                             </div>
                             <div class="p-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1">
                                 <strong class="text-slate-900 dark:text-slate-200">یکپارچه‌سازی ربات تلگرام:</strong>
@@ -408,7 +408,7 @@
             const copyCodeBtn = document.getElementById('copy-code-btn');
             const downloadCodeBtn = document.getElementById('download-code-btn');
 
-            const ENCODED_WORKER_URL = 'https://raw.githubusercontent.com/itsyebekhe/nahan/main/_worker.encode.js';
+            const ENCODED_WORKER_URL = 'https://raw.githubusercontent.com/redcorexx/Red-Panel/main/_worker.encode.js';
 
             const loadEncodedWorker = async () => {
                 encodedCodeArea.value = "// در حال دریافت کدهای ورکر نسخه Encoded از گیت‌هاب...";

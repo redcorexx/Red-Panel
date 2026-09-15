@@ -1,12 +1,12 @@
-# Project Nahan (پروژه نهان)
+# Red Panel (پروژه رد پنل)
 
 ### The Ultimate Serverless Gateway on Cloudflare Workers
 
-**Nahan** (Persian for *Hidden/Concealed*) is a secure, lightweight, and highly customizable reverse proxy that runs entirely on the edge. It transforms your Cloudflare Worker into a powerful, obfuscated gateway using **VLESS** or **Trojan** protocols, managed via a beautiful, self-contained Web UI.
+**RedPanel** (Persian for *Hidden/Concealed*) is a secure, lightweight, and highly customizable reverse proxy that runs entirely on the edge. It transforms your Cloudflare Worker into a powerful, obfuscated gateway using **VLESS** or **Trojan** protocols, managed via a beautiful, self-contained Web UI.
 
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](./LICENSE)
-[![JavaScript](https://img.shields.io/badge/JavaScript-100%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/itsyebekhe/nahan/blob/main/_worker.js)
+[![JavaScript](https://img.shields.io/badge/JavaScript-100%25-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/redcorexx/Red-Panel/blob/main/_worker.js)
 
 > 🇮🇷 [نسخه فارسی / Persian Version](./README_FA.md)
 
@@ -14,7 +14,7 @@
 
 ## 📖 Table of Contents
 
-- [Why Nahan?](#-why-nahan)
+- [Why RedPanel?](#-why-redpanel)
 - [Key Features](#-key-features)
 - [Prerequisites](#-prerequisites)
 - [Quick Install Options](#-quick-install-options)
@@ -29,9 +29,9 @@
 
 ---
 
-## 🌟 Why Nahan?
+## 🌟 Why RedPanel?
 
-Nahan isn't just a proxy script — it's a complete management solution designed for **stealth**, **speed**, and **ease of use**.
+RedPanel isn't just a proxy script — it's a complete management solution designed for **stealth**, **speed**, and **ease of use**.
 
 - 🛡️ **Hidden in Plain Sight:** Unauthorized access attempts are proxied to legitimate sites (e.g., `ubuntu.com` or `docker.com`), making your gateway look like a regular website to network scanners.
 - ⚡ **Zero Server Cost:** Runs entirely on Cloudflare's free plan. No VPS, no server maintenance.
@@ -49,7 +49,7 @@ Nahan isn't just a proxy script — it's a complete management solution designed
 | 🔐 **Dual Protocol** | Switch instantly between **VLESS** (Alpha), **Trojan** (Beta), or **Both** simultaneously |
 | 📱 **QR Code Generation** | Modal-based QR codes for instant mobile client configuration |
 | 👥 **Multi-User Profiles** | Create separate profiles with unique subscription links, per-user nodes, and per-user NAT64 |
-| 🌍 **Clean IP Multiplexer** | Input a list of clean Cloudflare IPs — Nahan auto-generates configs for all of them |
+| 🌍 **Clean IP Multiplexer** | Input a list of clean Cloudflare IPs — RedPanel auto-generates configs for all of them |
 | 🌐 **NAT64 Support** | Automatic IPv4-to-NAT64-mapped IPv6 conversion with multiple prefix support |
 | ⚙️ **Real-Time Metrics** | View Origin IP, Edge Node location, and run browser-side latency diagnostics |
 | 💾 **D1 SQLite Storage** | All configuration persists in Cloudflare D1 even after code updates |
@@ -64,7 +64,7 @@ Nahan isn't just a proxy script — it's a complete management solution designed
 | 🏷️ **Rich Name Strategy** | Config naming with `{FLAG}`, `{COUNTRY}`, `{CITY}`, `{ISP}`, `{HOST}`, `{DATE}`, `{WORKER}` tags |
 | 🌐 **Bilingual Subscription Page** | Subscription info page with full **Persian/Farsi** and **English** support, RTL layout, and dark/light mode toggle |
 | 🤖 **Telegram Bot Management** | Full gateway management via inline Telegram buttons — users, settings, logs, and advanced config |
-| 🔗 **Linked Panels (Other Nodes)** | Connect multiple Nahan panels securely with API Keys for cross-panel management and update propagation |
+| 🔗 **Linked Panels (Other Nodes)** | Connect multiple Red Panel panels securely with API Keys for cross-panel management and update propagation |
 
 ---
 
@@ -79,10 +79,11 @@ Nahan isn't just a proxy script — it's a complete management solution designed
 
 ## 🚀 Quick Install Options
 
-For easier deployment you can use:
+For easier deployment you can run the interactive setup wizard:
 
-- **Telegram Install Bot:** [@itsyebekhebot](https://t.me/itsyebekhebot)
-- **Web Installer:** [https://erpycode.github.io/nahan-installer/](https://erpycode.github.io/nahan-installer/)
+```bash
+bash setup.sh
+```
 
 Or follow the manual steps below.
 
@@ -100,8 +101,8 @@ Or follow the manual steps below.
 ### Step 2: Deploy the Worker
 
 1. Go to **Workers & Pages** → **Create application** → **Create Worker**.
-2. Name it (e.g. `nahan-core`) and click **Deploy**.
-3. Click **Edit code**, delete the placeholder, and paste the full content of [`_worker.js`](https://github.com/itsyebekhe/nahan/blob/main/_worker.js).
+2. Name it (e.g. `redpanel-core`) and click **Deploy**.
+3. Click **Edit code**, delete the placeholder, and paste the full content of [`_worker.js`](https://github.com/redcorexx/Red-Panel/blob/main/_worker.js).
 4. Click **Save and Deploy**.
 
 ### Step 3: Bind the D1 Database
@@ -161,11 +162,11 @@ In **Advanced** → **Clean IPs**, enter one IP (or `IP#Name`) per line. The sub
 
 ### Relay IP
 
-Recommended bot: [@nahanproxyipbot](https://t.me/nahanproxyipbot)
+Set your own relay/proxy IP in the panel settings (or via the `RELAY_IP` environment variable).
 
 ### Linked Panels (Other Nodes)
 
-Connect external Nahan panels using **URL + API Key** for cross-panel management and update propagation.  
+Connect external Red Panel panels using **URL + API Key** for cross-panel management and update propagation.  
 (Legacy `slaveNodes` / Cascade fields are automatically migrated to `linkedPanels`.)
 
 ### Multi-User Profiles
@@ -197,9 +198,6 @@ Toggle in Advanced (or send `/pause` via Telegram) to immediately stop all proxy
 | Purpose | Resource |
 |---|---|
 | Clean IP finder | [senpaiscanner](https://github.com/senpaiscanner) · [@itsZetaBot](https://t.me/itsZetaBot) |
-| Relay IP | [@nahanproxyipbot](https://t.me/nahanproxyipbot) |
-| Easy Install (Telegram) | [@itsyebekhebot](https://t.me/itsyebekhebot) |
-| Web Installer | [erpycode.github.io/nahan-installer](https://erpycode.github.io/nahan-installer/) |
 
 ---
 
@@ -249,6 +247,6 @@ MIT License — see [LICENSE](./LICENSE)
 
 Made with ❤️ by the Open Source Community
 
-[⭐ Star this repo](https://github.com/itsyebekhe/nahan) · [🐛 Report a bug](https://github.com/itsyebekhe/nahan/issues) · [🇮🇷 نسخه فارسی](./README_FA.md)
+[⭐ Star this repo](https://github.com/redcorexx/Red-Panel) · [🐛 Report a bug](https://github.com/redcorexx/Red-Panel/issues) · [🇮🇷 نسخه فارسی](./README_FA.md)
 
 </div>
