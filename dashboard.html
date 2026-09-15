@@ -488,10 +488,12 @@ html:not(.dark) .rp-field input{background:#fff;color:#475569}
 .rp-qr-big{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:var(--color-bg);border:1px solid var(--color-border);border-radius:14px;padding:14px;color:var(--color-text);font-size:13px;font-weight:800;cursor:pointer}
 .rp-qr-big .chev{margin-inline-start:auto}
 .rp-apps2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.rp-app2{--c:#8b5cf6;display:flex;align-items:center;gap:10px;border-radius:14px;padding:12px;text-decoration:none;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 10%,transparent)}
-.rp-app-ico{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
-.rp-app-name{font-size:13px;font-weight:800;color:var(--color-text)}
-.rp-cpbtn{margin-inline-start:auto;flex:none;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--color-border);border-radius:10px;padding:8px;color:#cbd5e1;cursor:pointer}
+.rp-app2{--c:#8b5cf6;display:flex;align-items:center;gap:8px;border-radius:12px;padding:9px 10px;text-decoration:none;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 10%,transparent);min-width:0}
+.rp-app-ico{flex:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}
+.rp-app-ico svg{width:15px;height:15px}
+.rp-app-name{font-size:11px;font-weight:800;color:var(--color-text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rp-cpbtn{margin-inline-start:auto;flex:none;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--color-border);border-radius:8px;padding:6px;color:#cbd5e1;cursor:pointer}
+.rp-cpbtn svg{width:13px;height:13px}
 /* circular save fab */
 .rp-save-wrap{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
 .rp-save-status{font-size:11px;font-weight:800;color:var(--color-primary)}
