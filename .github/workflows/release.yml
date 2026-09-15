@@ -1,0 +1,87 @@
+name: Release Pipeline
+
+# ------------------------------------------------------------------
+# Red Panel — Release Pipeline
+#
+# هر بار که تغییری روی _worker.js پوش شود:
+#   1. فایل version را با CURRENT_VERSION داخل کد همگام می‌کند
+#   2. نسخهٔ انکودشدهٔ ورکر (_worker.encode.js) را بازسازی می‌کند
+#   3. تغییرات را کامیت می‌کند
+#   4. اگر نسخه عوض شده باشد، یک GitHub Release می‌سازد
+#
+# نتیجه: پنل کاربرانی که «آپدیت خودکار» را روشن کرده‌اند، به‌محض
+# انتشار نسخهٔ جدید، به‌صورت خودکار از همین مخزن به‌روزرسانی می‌شوند.
+# ------------------------------------------------------------------
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '_worker.js'
+      - 'worker_converter.py'
+      - '.github/workflows/release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Sync version file & detect change
+        id: ver
+        run: |
+          NEW=$(grep -o 'const CURRENT_VERSION *= *"[^"]*"' _worker.js | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          OLD=$(cat version 2>/dev/null | tr -d '[:space:]' || echo none)
+          [ -n "$NEW" ] || { echo "CURRENT_VERSION not found!"; exit 1; }
+          echo "$NEW" > version
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+          if [ "$NEW" != "$OLD" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "old=$OLD" >> "$GITHUB_OUTPUT"
+            echo "::notice::Version bumped $OLD -> $NEW"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Encode worker
+        run: |
+          python worker_converter.py encode -i _worker.js -o _worker.encode.js
+
+      - name: Commit artifacts
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add _worker.encode.js version
+          if git diff --staged --quiet; then
+            echo "No artifact changes."
+          else
+            git commit -m "Release v${{ steps.ver.outputs.new }} — encode worker & sync version [skip ci]"
+            git push
+          fi
+
+      - name: Create GitHub Release
+        if: steps.ver.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.ver.outputs.new }}" \
+            --title "Red Panel v${{ steps.ver.outputs.new }}" \
+            --notes "️ انتشار خودکار — از v${{ steps.ver.outputs.old }} به v${{ steps.ver.outputs.new }}
+
+            پنل‌های کاربرانی که «آپدیت خودکار» را فعال کرده‌اند به‌صورت خودکار به‌روزرسانی می‌شوند؛
+            بقیه از داشبورد دکمهٔ به‌روزرسانی را می‌بینند." \
+            --target "$GITHUB_SHA" || echo "Release already exists, skipping."
