@@ -81,17 +81,14 @@
 
 ## 🚀 گزینه‌های نصب سریع
 
-برای نصب آسان‌تر می‌توانید از **ویزارد رد پنل** استفاده کنید:
+برای نصب آسان‌تر می‌توانید از این روش‌ها استفاده کنید:
 
-- **ویزارد وب (GitHub Pages):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/)
-- **ویزارد وب (نسخهٔ Worker، بدون مشکل CORS):** فایل [`wizard/worker.js`](./wizard/worker.js) را روی کلودفلر دیپلوی کنید (`npx wrangler deploy` در پوشهٔ wizard یا پیست در یک Worker جدید)
-- **ویزارد ترمینالی (چندحسابی، ویندوز/لینوکس/مک/Termux):**
+- **نصب‌کننده تحت وب (یک‌کلیک):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) — همه‌چیز را به‌صورت خودکار از مرورگر شما مستقر می‌کند
+- **ویزارد نصب تعاملی در ترمینال:**
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/redcorexx/Red-Panel/main/wizard/install.sh)
+bash setup.sh
 ```
-
-- **نصب‌کنندهٔ ترمینالی پیشرفته (همهٔ گزینه‌ها + حذف):** `bash setup.sh`
 
 یا مراحل دستی زیر را دنبال کنید.
 

@@ -79,17 +79,14 @@ RedPanel isn't just a proxy script — it's a complete management solution desig
 
 ## 🚀 Quick Install Options
 
-For easier deployment you can use the **Red Panel Wizard**:
+For easier deployment you can use:
 
-- **Wizard — Web (GitHub Pages):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/)
-- **Wizard — Web (Worker edition, no CORS issues):** deploy [`wizard/worker.js`](./wizard/worker.js) to your Cloudflare (`npx wrangler deploy` from `wizard/` or paste it in a new Worker)
-- **Wizard — CLI (multi-account, Windows/Linux/macOS/Termux):**
+- **Web Installer (one-click):** [redcorexx.github.io/Red-Panel](https://redcorexx.github.io/Red-Panel/) — deploys everything automatically from your browser
+- **Interactive CLI wizard:**
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/redcorexx/Red-Panel/main/wizard/install.sh)
+bash setup.sh
 ```
-
-- **Advanced CLI installer (full options + uninstall):** `bash setup.sh`
 
 Or follow the manual steps below.
 
