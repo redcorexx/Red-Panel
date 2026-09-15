@@ -280,5 +280,280 @@
     <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full shadow-2xl font-bold text-sm z-50 transition-all transform -translate-y-4 opacity-0 pointer-events-none flex items-center gap-2"></div>
 
     
+<script>
+
+        const I18N = {
+            en: {
+                totalUsage: 'Total Usage',
+                dailyUsage: 'Daily Usage',
+                expDate: 'Expiration Date',
+                calendarLocal: 'Calendar Local',
+                unlimitedPlan: 'Unlimited Plan',
+                noDailyLimit: 'No Daily Limit',
+                integrationTitle: 'Integration Connections',
+                integrationDesc: 'Add the correct configuration link based on your preferred format below.',
+                universalLink: 'Universal Auto-Detecting Link',
+                universalDesc: 'This URL automatically detects your client and delivers the optimal format.',
+                oneClickImport: 'One-Click Import',
+                copy: 'Copy',
+                copyRaw: 'Copy Raw URL',
+                qr: 'QR',
+                parsedContent: 'Retrieve Raw Content',
+                close: 'Close',
+                qrTitle: 'Scan QR Code',
+                copied: 'Copied to clipboard!',
+                decodedCopied: 'Decoded links copied!',
+                decodedError: 'Error fetching content',
+                used: '% Used',
+                active: 'Active',
+                paused: 'Paused',
+                expired: 'Expired',
+                limitExceeded: 'Limit Exceeded',
+                dailyLimitExceeded: 'Daily Limit Exceeded',
+                availableFormats: 'Available Subscription Formats',
+                formatsDesc: 'Use these links to explicitly request specific configuration formats.',
+                advDesc: 'Advanced users can retrieve raw config blocks manually.',
+                helpTitle: 'Help & Support',
+                helpDesc: 'Having trouble connecting? Keep your clients updated or contact support for assistance.'
+            },
+            fa: {
+                totalUsage: 'مصرف کل',
+                dailyUsage: 'مصرف روزانه',
+                expDate: 'تاریخ انقضا',
+                calendarLocal: 'زمان محلی',
+                unlimitedPlan: 'طرح نامحدود',
+                noDailyLimit: 'بدون محدودیت روزانه',
+                integrationTitle: 'لینک‌های اتصال',
+                integrationDesc: 'لینک پیکربندی مورد نظر خود را اضافه کنید.',
+                universalLink: 'لینک خودکار',
+                universalDesc: 'این لینک کلاینت شما را شناسایی و بهترین فرمت را ارسال می‌کند.',
+                oneClickImport: 'وارد کردن با یک کلیک',
+                copy: 'کپی',
+                copyRaw: 'کپی لینک خام',
+                qr: 'QR',
+                parsedContent: 'دریافت متن خام',
+                close: 'بستن',
+                qrTitle: 'اسکن کد QR',
+                copied: 'کپی شد!',
+                decodedCopied: 'لینک‌ها کپی شد!',
+                decodedError: 'خطا در دریافت',
+                used: '% مصرف',
+                active: 'فعال',
+                paused: 'متوقف',
+                expired: 'منقضی',
+                limitExceeded: 'از حد مجاز رد شده',
+                dailyLimitExceeded: 'از حد روزانه رد شده',
+                availableFormats: 'فرمت‌های اشتراک در دسترس',
+                formatsDesc: 'از این لینک‌ها برای درخواست مستقیم فرمت‌های خاص پیکربندی استفاده کنید.',
+                advDesc: 'کاربران پیشرفته می‌توانند بلوک‌های پیکربندی خام را دستی دریافت کنند.',
+                helpTitle: 'راهنما و پشتیبانی',
+                helpDesc: 'برای اتصال مشکل دارید؟ کلاینت‌ها را به‌روز نگه دارید یا با پشتیبانی تماس بگیرید.'
+            }
+        };
+
+        let currentLang = 'en';
+        let isDark = true;
+
+        function applyTheme() {
+            const root = document.documentElement;
+            const themeLabel = document.getElementById('theme-label');
+            if (isDark) {
+                root.classList.add('dark');
+                document.getElementById('theme-icon').textContent = '☀️';
+                if (themeLabel) themeLabel.textContent = currentLang === 'fa' ? 'روشن' : 'Light';
+            } else {
+                root.classList.remove('dark');
+                document.getElementById('theme-icon').textContent = '🌙';
+                if (themeLabel) themeLabel.textContent = currentLang === 'fa' ? 'تاریک' : 'Dark';
+            }
+            try { localStorage.setItem('sub-theme', isDark ? 'dark' : 'light'); } catch(e) {}
+        }
+
+        function applyLang() {
+            const t = I18N[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+            if (currentLang === 'fa') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'fa');
+                var li1=document.getElementById('lang-icon'); if(li1) li1.textContent = '🇮';
+                var ll1=document.getElementById('lang-label'); if(ll1) ll1.textContent = 'FA';
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', 'en');
+                var li2=document.getElementById('lang-icon'); if(li2) li2.textContent = '🇺🇸';
+                var ll2=document.getElementById('lang-label'); if(ll2) ll2.textContent = 'EN';
+            }
+            initStatusBadge();
+            try { localStorage.setItem('sub-lang', currentLang); } catch(e) {}
+        }
+
+        function toggleTheme() {
+            isDark = !isDark;
+            applyTheme();
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'fa' : 'en';
+            applyLang();
+            applyTheme();
+        }
+
+        function initStatusBadge() {
+            const badge = document.getElementById('status-badge');
+            const t = I18N[currentLang];
+            const map = {
+                active: { en: t.active || 'Active', bg: 'var(--green-bg)', border: 'var(--green-border)', color: 'var(--green-text)' },
+                paused: { en: t.paused || 'Paused', bg: 'var(--amber-bg)', border: 'var(--amber-border)', color: 'var(--amber-text)' },
+                expired: { en: t.expired || 'Expired', bg: 'var(--red-bg)', border: 'var(--red-border)', color: 'var(--red-text)' },
+                limit: { en: t.limitExceeded || 'Limit Exceeded', bg: 'var(--red-bg)', border: 'var(--red-border)', color: 'var(--red-text)' },
+                dailyLimit: { en: t.dailyLimitExceeded || 'Daily Limit Exceeded', bg: 'var(--red-bg)', border: 'var(--red-border)', color: 'var(--red-text)' }
+            };
+            const s = map['__STATUS_CODE__'] || map.active;
+            badge.textContent = s.en;
+            badge.style.background = s.bg;
+            badge.style.borderColor = s.border;
+            badge.style.color = s.color;
+            badge.style.border = '1px solid ' + s.border;
+        }
+
+        function copyLink(id) {
+            const el = document.getElementById(id);
+            el.select();
+            navigator.clipboard.writeText(el.value);
+            showToast(I18N[currentLang].copied);
+        }
+
+        async function fetchDecodedRawContent() {
+            try {
+                const res = await fetch('__SYNC_RAW__');
+                if(!res.ok) throw new Error('Failed');
+                const base64Str = await res.text();
+                const decodedText = atob(base64Str.trim());
+                await navigator.clipboard.writeText(decodedText);
+                showToast(I18N[currentLang].decodedCopied);
+            } catch(e) {
+                alert(I18N[currentLang].decodedError + ': ' + e.message);
+            }
+        }
+
+        function showQRModal(url) {
+            const t = I18N[currentLang];
+            document.getElementById('qr-title').innerText = t.qrTitle;
+            document.getElementById('qr-text').innerText = url;
+            document.getElementById('qr-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(url);
+            
+            const modal = document.getElementById('qr-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animation
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.querySelector('.modal-card').style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeQRModal() {
+            const modal = document.getElementById('qr-modal');
+            modal.style.opacity = '0';
+            modal.querySelector('.modal-card').style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.style.opacity = '1';
+            t.style.transform = 'translate(-50%, 0)';
+            setTimeout(() => { 
+                t.style.opacity = '0'; 
+                t.style.transform = 'translate(-50%, 16px)';
+            }, 2500);
+        }
+
+        
+        // Fetch Client IP
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(data => {
+                let ipEl = document.getElementById('client-ip');
+                if(ipEl) ipEl.textContent = data.ip;
+            }).catch(e => {
+                let ipEl = document.getElementById('client-ip');
+                if(ipEl) ipEl.textContent = 'Unknown';
+            });
+
+        (function init() {
+            try {
+                const savedTheme = localStorage.getItem('sub-theme');
+                if (savedTheme) isDark = savedTheme === 'dark';
+            } catch(e) {}
+            try {
+                const savedLang = localStorage.getItem('sub-lang') || localStorage.getItem('lang');
+                if (savedLang && I18N[savedLang]) currentLang = savedLang;
+            } catch(e) {}
+            applyTheme();
+            applyLang();
+            
+            // Base64 encode normal link for shadowrocket
+            const normalLink = '__SYNC_NORMAL__';
+            document.querySelectorAll('a').forEach(a => {
+                if(a.href.includes('__SYNC_NORMAL_BASE64__')) {
+                    a.href = a.href.replace('__SYNC_NORMAL_BASE64__', btoa(normalLink));
+                }
+            });
+
+            // Set base64 flag for v2rayNG link
+            const v2rayngLink = document.getElementById('v2rayng-link');
+            if (v2rayngLink) {
+                const base64Url = normalLink + (normalLink.includes('?') ? '&flag=base64' : '?flag=base64');
+                v2rayngLink.href = 'v2rayng://install-sub?url=' + encodeURIComponent(base64Url) + '&name=' + encodeURIComponent('__USER_NAME__');
+            }
+
+            // Populate format-specific subscription links
+            const rawInput = document.getElementById('link-raw-fmt');
+            const base64Input = document.getElementById('link-base64-fmt');
+            const singboxInput = document.getElementById('link-singbox-fmt');
+            const clashInput = document.getElementById('link-clash-fmt');
+            const v2raynInput = document.getElementById('link-v2rayn-fmt');
+
+            if (rawInput) rawInput.value = normalLink + (normalLink.includes('?') ? '&flag=raw' : '?flag=raw');
+            if (base64Input) base64Input.value = normalLink + (normalLink.includes('?') ? '&flag=base64' : '?flag=base64');
+            if (singboxInput) singboxInput.value = normalLink + (normalLink.includes('?') ? '&flag=singbox' : '?flag=singbox');
+            if (clashInput) clashInput.value = normalLink + (normalLink.includes('?') ? '&flag=clash' : '?flag=clash');
+            if (v2raynInput) v2raynInput.value = normalLink + (normalLink.includes('?') ? '&flag=vjson' : '?flag=vjson');
+        })();
+    
+</script>
+
+<script>
+(function () {
+    function paint() {
+        var L = (typeof currentLang !== 'undefined' && currentLang === 'fa') ? 'fa' : 'en';
+        var now = new Date();
+        var ed = document.getElementById('paper-sub-edition');
+        var ti = document.getElementById('paper-sub-title');
+        if (ed) {
+            var ds = now.toLocaleDateString(L === 'fa' ? 'fa-IR' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+            var wd = now.toLocaleDateString(L === 'fa' ? 'fa-IR' : 'en-US', { weekday:'long' });
+            ed.textContent = L === 'fa' ? ('ویرایش روزنامه · ' + wd + '، ' + ds) : ('NEWSPAPER EDITION · ' + wd.toUpperCase() + ' — ' + ds.toUpperCase());
+        }
+        if (ti) ti.textContent = L === 'fa' ? 'پورتال مشترک' : 'Subscriber Portal';
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        paint();
+        new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'dir', 'lang'] });
+        setTimeout(paint, 600);
+    });
+})();
+</script>
+
 </body>
 </html>
