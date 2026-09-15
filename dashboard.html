@@ -464,6 +464,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* dark-mode contrast fixes (override light tailwind bgs) */
+html.dark input, html.dark select, html.dark textarea { color:#f5f6f8 !important; }
+html:not(.dark) input, html:not(.dark) select, html:not(.dark) textarea { color:#101014 !important; }
+html.dark button[class*="bg-slate-100"], html.dark button[class*="bg-slate-50"], html.dark button[class*="bg-white"], html.dark a[class*="bg-slate-100"], html.dark a[class*="bg-slate-50"] { background:#14141a !important; color:#f5f6f8 !important; border:1px solid rgba(255,255,255,.09); }
+html.dark div[class*="bg-slate-50"], html.dark div[class*="bg-slate-100"], html.dark div[class*="bg-white"] { background:#101014 !important; }
+html.dark #port-checkboxes-container { background:#0c0c10 !important; border-color:var(--color-border) !important; }
+html.dark #port-checkboxes-container label { background:#14141a !important; border-color:var(--color-border) !important; color:#f5f6f8 !important; }
+html.dark #port-checkboxes-container label span { color:#f5f6f8 !important; }
+html.dark .text-slate-500, html.dark .text-slate-600, html.dark .text-slate-700, html.dark .text-slate-800 { color:#c3cad4 !important; }
+html:not(.dark) .text-slate-500, html:not(.dark) .text-slate-600, html:not(.dark) .text-slate-700 { color:#3f4650 !important; }
 /* users table rows (horizontal scroll) */
 #tbl-users.u-list { display:flex; flex-direction:column; gap:12px; min-width:840px; }
 .u-row { display:flex; align-items:center; gap:16px; background:var(--color-surface); border:1px solid var(--color-border); border-radius:16px; padding:14px 16px; }
