@@ -462,6 +462,36 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* endpoints accordion (red design) */
+.rp-acc{position:relative;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);border-radius:18px;margin-bottom:16px;break-inside:avoid}
+.rp-acc::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:#f43f5e;box-shadow:0 0 16px #f43f5e}
+.rp-acc-head{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;cursor:pointer;padding:18px}
+.rp-acc-ico{flex:none;width:50px;height:50px;border-radius:14px;background:rgba(244,63,94,.1);color:#f43f5e;display:flex;align-items:center;justify-content:center}
+.rp-acc-txt{text-align:start;flex:1;min-width:0}
+.rp-acc-txt h3{margin:0;font-size:20px;font-weight:900;color:var(--color-text)}
+.rp-acc-badge{display:inline-block;margin-top:6px;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.06);color:#9fb0c7;font-size:10px;font-weight:800;letter-spacing:.12em}
+html:not(.dark) .rp-acc-badge{background:rgba(0,0,0,.06);color:#475569}
+.rp-chev{color:var(--color-text-muted);transition:transform .3s;flex:none}
+.rp-acc-body{padding:0 18px 18px;display:flex;flex-direction:column;gap:14px}
+.rp-sub-card{position:relative;overflow:hidden;background:var(--color-bg);border:1px solid var(--color-border);border-radius:14px;padding:14px;display:flex;gap:12px}
+.rp-sub-card.green{border-color:rgba(16,185,129,.5);box-shadow:0 0 18px rgba(16,185,129,.1)}
+.rp-sub-card.green::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:#10b981}
+.rp-sc-ico{--c:#f43f5e;flex:none;width:46px;height:46px;border-radius:12px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);display:flex;align-items:center;justify-content:center}
+.rp-sc-main{flex:1;min-width:0}
+.rp-sc-label{margin:0 0 8px;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--color-text-muted);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.rp-sc-label .dot{width:8px;height:8px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
+.rp-field{display:flex;gap:8px}
+.rp-field input{flex:1;min-width:0;background:#0a0d13;border:1px solid var(--color-border);border-radius:10px;color:#9fb0c7;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;padding:11px 12px;outline:none}
+html:not(.dark) .rp-field input{background:#fff;color:#475569}
+.rp-copy{flex:none;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);border-radius:10px;padding:10px;background:transparent;color:#cbd5e1;cursor:pointer}
+.rp-qr-big{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:var(--color-bg);border:1px solid var(--color-border);border-radius:14px;padding:14px;color:var(--color-text);font-size:13px;font-weight:800;cursor:pointer}
+.rp-qr-big .chev{margin-inline-start:auto}
+.rp-apps2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rp-app2{--c:#8b5cf6;display:flex;align-items:center;gap:10px;border-radius:14px;padding:12px;text-decoration:none;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 10%,transparent)}
+.rp-app-ico{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
+.rp-app-name{font-size:13px;font-weight:800;color:var(--color-text)}
+.rp-cpbtn{margin-inline-start:auto;flex:none;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--color-border);border-radius:10px;padding:8px;color:#cbd5e1;cursor:pointer}
 /* circular save fab */
 .rp-save-wrap{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
 .rp-save-status{font-size:11px;font-weight:800;color:var(--color-primary)}
@@ -3059,6 +3089,12 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
           window.handleCopy = function handleCopy(btn) {
               copyData('sync-' + btn.dataset.id);
           }
+          window.copyHref = function(btn) {
+              const href = btn.closest('a').getAttribute('href');
+              navigator.clipboard.writeText(href).then(() => {
+                  showToast(lang === 'fa' ? 'کپی شد!' : 'Copied!', 'success');
+              });
+          }
           window.handleQR = function handleQR(btn) {
               showQR(btn.dataset.name, document.getElementById('sync-' + btn.dataset.id).value);
           }
@@ -3492,41 +3528,47 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                 let profilesHtml = '';
                 data.profiles.forEach(p => {
                             const isDef = p.name === 'Default';
-                            let html = `<div class="bg-[var(--color-surface)]  rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative mb-4 break-inside-avoid inline-block w-full" data-accordion>
-    <div class="absolute top-0 end-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -z-10"></div>
-    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 md:p-6">
-        <h3 class="text-lg font-bold text-slate-800 dark:text-white flex items-center">
-            <svg class="w-5 h-5 me-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-            ${p.name}
-        </h3>
-        <div class="flex items-center gap-2">
-            ${isDef ? '<span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold uppercase">Master</span>' : ''}
-            <svg class="w-4 h-4 text-slate-400 accordion-icon transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            let html = `<div class="rp-acc" data-accordion>
+    <button onclick="toggleAccordion(this)" class="rp-acc-head">
+        <div class="rp-acc-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+        <div class="rp-acc-txt">
+            <h3>${p.name}</h3>
+            ${isDef ? '<span class="rp-acc-badge">MASTER</span>' : ''}
         </div>
+        <svg class="accordion-icon rp-chev" style="${isDef ? 'transform:rotate(180deg)' : ''}" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
     </button>
-    <div class="transition-all duration-300" style="max-height:0;overflow:hidden;" data-accordion-content>
-        <div class="space-y-3 px-5 md:px-6 pb-5 md:pb-6">
-            <div>
-                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">UUID</label>
-                <div class="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-darkborder px-3 py-2 rounded-lg text-xs font-mono text-slate-500">${p.id}</div>
+    <div data-accordion-content style="${isDef ? 'visibility:visible;max-height:none;' : 'max-height:0;overflow:hidden;visibility:hidden;'}">
+        <div class="rp-acc-body">
+            <div class="rp-sub-card">
+                <div class="rp-sc-ico" style="--c:#f43f5e"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg></div>
+                <div class="rp-sc-main">
+                    <p class="rp-sc-label">UUID</p>
+                    <div class="rp-field" dir="ltr">
+                        <input type="text" id="uuid-${p.id}" readonly value="${p.id}">
+                        <button class="rp-copy" onclick="copyData('uuid-${p.id}')"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
+                </div>
             </div>
-            <div class="relative">
-                <label class="block text-[10px] font-semibold text-emerald-500 uppercase tracking-wider mb-1 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Universal Sync URL</label>
-                <input type="text" id="sync-${p.id}" readonly value="${p.sync}" class="w-full bg-[var(--color-bg)] border border-slate-200 dark:border-darkborder px-4 py-2.5 rounded-xl text-xs outline-none font-mono text-slate-600 dark:text-slate-400 truncate pe-12">
-                <button data-id="${p.id}" onclick="handleCopy(this)" class="absolute bottom-1 end-1 text-primary p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+            <div class="rp-sub-card green">
+                <div class="rp-sc-ico" style="--c:#10b981"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                <div class="rp-sc-main">
+                    <p class="rp-sc-label" style="color:#34d399"><span class="dot"></span>UNIVERSAL SYNC URL</p>
+                    <div class="rp-field" dir="ltr">
+                        <input type="text" id="sync-${p.id}" readonly value="${p.sync}">
+                        <button class="rp-copy" data-id="${p.id}" onclick="handleCopy(this)"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
+                </div>
             </div>
-            <div class="mt-2">
-                <button data-id="${p.id}" data-name="${p.name}" onclick="handleQR(this)" class="w-full flex items-center justify-center p-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-darkborder rounded-xl transition-all gap-1.5 text-[11px] font-bold text-slate-600 dark:text-slate-400">
-                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 11v1m5-7h1m-13 0h1m2-5a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V6a2 2 0 00-2-2h-8zM9 9h1m0 0v1m2-1h1m0 0v1"></path></svg>
-                    <span data-i18n="show_qr">Show QR Code</span>
-                </button>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
-    <a href="v2rayng://install-sub?url=${encodeURIComponent(p.sync + (p.sync.includes('?') ? '&flag=base64' : '?flag=base64'))}" class="text-center p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold hover:bg-indigo-100 transition-colors">v2rayNG</a>
-    <a href="shadowrocket://add/sub://${btoa(p.sync)}" class="text-center p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold hover:bg-blue-100 transition-colors">Shadowrocket</a>
-    <a href="streisand://import/${p.sync}" class="text-center p-2 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold hover:bg-emerald-100 transition-colors">Streisand</a>
-    <a href="v2ray://install-sub?url=${encodeURIComponent(p.sync)}" class="text-center p-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 text-[10px] font-bold hover:bg-purple-100 transition-colors">v2rayN</a>
-</div>
-
+            <button class="rp-qr-big" data-id="${p.id}" data-name="${p.name}" onclick="handleQR(this)">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                <span data-i18n="show_qr">Show QR Code</span>
+                <svg class="chev" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+            <div class="rp-apps2">
+                <a href="v2rayng://install-sub?url=${encodeURIComponent(p.sync + (p.sync.includes('?') ? '&flag=base64' : '?flag=base64'))}" class="rp-app2" style="--c:#8b5cf6"><span class="rp-app-ico" style="background:#6d28d9">V</span><span class="rp-app-name">v2rayNG</span><button class="rp-cpbtn" onclick="event.preventDefault();event.stopPropagation();copyHref(this)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></a>
+                <a href="shadowrocket://add/sub://${btoa(p.sync)}" class="rp-app2" style="--c:#3b82f6"><span class="rp-app-ico" style="background:#2563eb"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2c4 3 6 7.5 6 12l-2.5 2.5L12 15l-3.5 1.5L6 14c0-4.5 2-9 6-12zm0 6a2 2 0 100 4 2 2 0 000-4zM8 18l-1.5 4L10 20zm8 0l1.5 4L14 20z"/></svg></span><span class="rp-app-name">Shadowrocket</span><button class="rp-cpbtn" onclick="event.preventDefault();event.stopPropagation();copyHref(this)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></a>
+                <a href="streisand://import/${p.sync}" class="rp-app2" style="--c:#10b981"><span class="rp-app-ico" style="background:#059669">S</span><span class="rp-app-name">Streisand</span><button class="rp-cpbtn" onclick="event.preventDefault();event.stopPropagation();copyHref(this)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></a>
+                <a href="v2ray://install-sub?url=${encodeURIComponent(p.sync)}" class="rp-app2" style="--c:#8b5cf6"><span class="rp-app-ico" style="background:#7c3aed">N</span><span class="rp-app-name">v2rayN</span><button class="rp-cpbtn" onclick="event.preventDefault();event.stopPropagation();copyHref(this)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button></a>
             </div>
         </div>
     </div>
