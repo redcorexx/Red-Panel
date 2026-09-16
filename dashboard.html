@@ -465,6 +465,24 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* metrics cards */
+.mcard{--c:#8b5cf6;position:relative;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);border-radius:18px;padding:18px 18px 18px 22px;display:flex;align-items:center;gap:14px}
+.mcard::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c);box-shadow:0 0 14px var(--c)}
+.m-ico{flex:none;width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);display:flex;align-items:center;justify-content:center}
+.m-mid{flex:1;min-width:0}
+.m-label{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-muted);margin:0 0 6px}
+.m-val{font-size:22px;font-weight:900;color:var(--color-text);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-sub{font-size:12.5px;color:var(--color-text-muted);margin:0}
+.m-pill{flex:none;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;background:color-mix(in srgb,var(--c) 10%,transparent);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);color:var(--c);font-size:11px;font-weight:800;letter-spacing:.06em;max-width:45%}
+.m-pill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mcard.diag{flex-direction:column;align-items:stretch}
+.mcard.diag .m-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.diag-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:14px;border:1px solid rgba(16,185,129,.5);background:rgba(16,185,129,.06);color:#34d399;font-weight:800;font-size:14px;cursor:pointer}
+.diag-btn:active{transform:scale(.98)}
+.ping-box{background:var(--color-bg);border:1px solid var(--color-border);border-radius:12px;padding:10px 12px;min-width:0}
+.ping-l{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin:0 0 4px}
+.ping-v{font-size:13px;font-weight:800;color:var(--color-text);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* dark-mode contrast fixes (override light tailwind bgs) */
 html.dark input, html.dark select, html.dark textarea { color:#f5f6f8 !important; }
 html:not(.dark) input, html:not(.dark) select, html:not(.dark) textarea { color:#101014 !important; }
@@ -846,63 +864,49 @@ a { text-underline-offset: 4px; }
                       </div>
 
                       <!-- NETWORK/METRICS VIEW -->
-                      <div id="view-network" class="hidden space-y-6">
-                            <div class="bg-[var(--color-surface)]/70 /70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/20 dark:border-white/10 mb-6">
-                              <h3 class="text-sm uppercase font-bold text-slate-500 tracking-wider mb-4" data-i18n="metrics_live">Live Profile Usage</h3>
-                              <div id="usage-metrics-container" class="flex flex-col">
-                                  <p class="text-xs text-slate-400 text-center py-4" data-i18n="no_metrics">No active connection data yet.</p>
+                      <div id="view-network" class="hidden space-y-4">
+                          <!-- DATA REGION -->
+                          <div class="mcard" style="--c:#8b5cf6">
+                              <div class="m-ico"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+                              <div class="m-mid">
+                                  <p class="m-label" data-i18n="stat_loc">Data Region</p>
+                                  <p class="m-val" id="net-loc">...</p>
                               </div>
+                              <span class="m-pill" style="--c:#8b5cf6"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"></path></svg><span id="net-ip-pill" class="font-mono" style="font-size:10px">…</span></span>
                           </div>
-                          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                              <div class="bg-[var(--color-surface)]  p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative overflow-hidden group">
-                                  <svg class="w-8 h-8 text-blue-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                                  <p class="text-xs uppercase font-bold text-slate-400 mb-1" data-i18n="stat_ip">Origin IP</p>
-                                  <p id="net-ip" class="text-xl md:text-2xl font-black font-mono">...</p>
+                          <!-- DATE TIME -->
+                          <div class="mcard" style="--c:#3b82f6">
+                              <div class="m-ico"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                              <div class="m-mid">
+                                  <p class="m-label" data-i18n="stat_datetime">Date Time</p>
+                                  <p class="m-val" id="net-datetime" dir="ltr">...</p>
                               </div>
-                              <div class="bg-[var(--color-surface)]  p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative overflow-hidden group">
-                                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
-                                  <p class="text-xs uppercase font-bold text-slate-400 mb-1" data-i18n="stat_dc">Edge Node</p>
-                                  <p id="net-colo" class="text-xl md:text-2xl font-black font-mono">...</p>
+                              <span class="m-pill" style="--c:#3b82f6"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span id="net-tz-pill">UTC</span></span>
+                          </div>
+                          <!-- EDGE NODE -->
+                          <div class="mcard" style="--c:#cbd5e1">
+                              <div class="m-ico"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg></div>
+                              <div class="m-mid">
+                                  <p class="m-label" data-i18n="stat_dc">Edge Node</p>
+                                  <p class="m-val" id="net-colo">...</p>
                               </div>
-                              <div class="bg-[var(--color-surface)]  p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative overflow-hidden group sm:col-span-2 lg:col-span-1">
-                                  <svg class="w-8 h-8 text-purple-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                  <p class="text-xs uppercase font-bold text-slate-400 mb-1" data-i18n="stat_loc">Data Region</p>
-                                  <p id="net-loc" class="text-lg font-bold truncate">...</p>
-                              </div>
-                              <div class="bg-[var(--color-surface)]  p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative overflow-hidden group sm:col-span-2 lg:col-span-1">
-                                  <svg class="w-8 h-8 text-blue-500 mb-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l-4-2"></path></svg>
-                                  <p class="text-xs uppercase font-bold text-slate-400 mb-1" data-i18n="stat_datetime">Date Time</p>
-                                  <p id="net-datetime" class="text-lg font-bold truncate text-center" dir="rtl">...</p>
-                              </div>
-                              <!-- Diagnostics Segment -->
-                              <div class="bg-[var(--color-surface)]  p-6 rounded-3xl shadow-sm border border-slate-200 dark:border-darkborder relative overflow-hidden group sm:col-span-2 lg:col-span-3">
-                                  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                      <div>
-                                          <h3 class="text-sm uppercase font-bold text-slate-400 mb-1" data-i18n="ping_test_title">Latency Diagnostics</h3>
-                                          <p class="text-xs text-slate-500" data-i18n="ping_test_desc">Test response time to your active node target.</p>
-                                      </div>
-                                      <button onclick="runPingTest()" class="px-6 py-2.5 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-colors text-sm" data-i18n="run_diagnostics">
-                                          ⚡ Run Diagnostics
-                                      </button>
+                              <span class="m-pill" style="--c:#94a3b8"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg><span id="net-city-pill">—</span><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                          </div>
+                          <!-- LATENCY DIAGNOSTICS -->
+                          <div class="mcard diag" style="--c:#10b981">
+                              <div class="m-top">
+                                  <div class="m-ico"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div>
+                                  <div>
+                                      <p class="m-label" data-i18n="ping_test_title">Latency Diagnostics</p>
+                                      <p class="m-sub" data-i18n="ping_test_desc">Test response time to your active node target.</p>
                                   </div>
-                                  <div id="ping-results" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 hidden">
-                                      <div class="bg-[var(--color-bg)] p-3 rounded-xl border border-slate-100 dark:border-darkborder/50">
-                                          <p class="text-[10px] uppercase font-bold text-slate-400" data-i18n="target_node">Target Node</p>
-                                          <p id="ping-target" class="text-sm font-bold font-mono truncate">...</p>
-                                      </div>
-                                      <div class="bg-[var(--color-bg)] p-3 rounded-xl border border-slate-100 dark:border-darkborder/50">
-                                          <p class="text-[10px] uppercase font-bold text-slate-400" data-i18n="response">Response</p>
-                                          <p id="ping-time" class="text-sm font-bold font-mono text-emerald-500">...</p>
-                                      </div>
-                                      <div class="bg-[var(--color-bg)] p-3 rounded-xl border border-slate-100 dark:border-darkborder/50">
-                                          <p class="text-[10px] uppercase font-bold text-slate-400" data-i18n="status">Status</p>
-                                          <p id="ping-status" class="text-sm font-bold">...</p>
-                                      </div>
-                                      <div class="bg-[var(--color-bg)] p-3 rounded-xl border border-slate-100 dark:border-darkborder/50">
-                                          <p class="text-[10px] uppercase font-bold text-slate-400" data-i18n="local_port">Local Port</p>
-                                          <p id="ping-port" class="text-sm font-bold font-mono">...</p>
-                                      </div>
-                                  </div>
+                              </div>
+                              <button class="diag-btn" onclick="runPingTest()"><span>⚡</span><span data-i18n="run_diagnostics">Run Diagnostics</span><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                              <div id="ping-results" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 hidden">
+                                  <div class="ping-box"><p class="ping-l" data-i18n="target_node">Target Node</p><p id="ping-target" class="ping-v font-mono">...</p></div>
+                                  <div class="ping-box"><p class="ping-l" data-i18n="response">Response</p><p id="ping-time" class="ping-v" style="color:#34d399">...</p></div>
+                                  <div class="ping-box"><p class="ping-l" data-i18n="status">Status</p><p id="ping-status" class="ping-v">...</p></div>
+                                  <div class="ping-box"><p class="ping-l" data-i18n="local_port">Local Port</p><p id="ping-port" class="ping-v font-mono">...</p></div>
                               </div>
                           </div>
                       </div>
@@ -3474,9 +3478,13 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                       document.getElementById('btn-logout-mob').classList.remove('hidden');
                       document.body.classList.add('logged-in');
 
-                      document.getElementById('net-ip').textContent = data.network.ip;
                       document.getElementById('net-colo').textContent = data.network.colo;
                       document.getElementById('net-loc').textContent = data.network.loc;
+                      var ipPill = document.getElementById('net-ip-pill'); if (ipPill) ipPill.textContent = data.network.ip;
+                      var __locParts = (data.network.loc || '').split(',');
+                      var cityPill = document.getElementById('net-city-pill'); if (cityPill) cityPill.textContent = (__locParts[0] || '—').toUpperCase();
+                      var __mins = -new Date().getTimezoneOffset(); var __h = Math.floor(Math.abs(__mins)/60); var __m = Math.abs(__mins)%60;
+                      var tzPill = document.getElementById('net-tz-pill'); if (tzPill) tzPill.textContent = 'UTC' + (__mins >= 0 ? '+' : '-') + __h + (__m ? ':' + String(__m).padStart(2,'0') : '');
                       const conf = data.config;
                       if (conf && conf.slaveNodes && conf.slaveNodes.trim().length > 0) {
                           if (!conf.linkedPanels) conf.linkedPanels = [];
