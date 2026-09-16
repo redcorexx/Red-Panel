@@ -468,6 +468,17 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* advanced accordion redesign */
+.adv-card{--c:#3b82f6;position:relative;overflow:hidden;background:var(--color-surface) !important;border:1px solid var(--color-border) !important;border-radius:16px}
+.adv-card::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c);box-shadow:0 0 14px var(--c)}
+.adv-card>button{padding:16px 16px 16px 22px !important;background:none !important}
+.adv-head{display:flex;align-items:center;gap:14px}
+.adv-ico{flex:none;width:50px;height:50px;border-radius:14px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);display:flex;align-items:center;justify-content:center}
+.adv-txt{display:flex;flex-direction:column;gap:4px;text-align:start;min-width:0}
+.adv-title{font-size:15px;font-weight:800;color:var(--color-text)}
+.adv-sub{margin:0;font-size:12px;color:var(--color-text-muted);font-weight:500}
+.adv-card .accordion-icon{color:var(--c);width:18px;height:18px}
 /* help & faq redesign */
 .help-head{--c:#f43f5e;position:relative;overflow:hidden;display:flex;gap:14px;align-items:center;background:linear-gradient(120deg, rgba(244,63,94,.14), transparent 55%), var(--color-surface);border:1px solid rgba(244,63,94,.35);border-radius:18px;padding:18px 18px 18px 22px}
 .help-head::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c);box-shadow:0 0 14px var(--c)}
@@ -1176,11 +1187,11 @@ a { text-underline-offset: 4px; }
                       <div id="view-advanced" class="hidden space-y-4">
 
                           <!-- Section: Network & DNS -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#3b82f6">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">🌐</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_network_dns">Network &amp; DNS</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_network_dns">Network &amp; DNS</span><p class="adv-sub" data-i18n="sub_net"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1226,11 +1237,11 @@ a { text-underline-offset: 4px; }
                           </div>
 
                           <!-- Section: Proxy & Relay -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#8b5cf6">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">🔗</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_proxy_relay">Proxy &amp; Relay</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_proxy_relay">Proxy &amp; Relay</span><p class="adv-sub" data-i18n="sub_proxy"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1263,11 +1274,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
 
                           
                           <!-- Section: Custom Routing -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#6366f1">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">🔀</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_routing_title">Custom Routing</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_routing_title">Custom Routing</span><p class="adv-sub" data-i18n="sub_routing"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1289,11 +1300,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                               </div>
                           </div>
                           <!-- Section: Upstream VLESS -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#ec4899">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">🔗</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_upstream_title">Upstream VLESS</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_upstream_title">Upstream VLESS</span><p class="adv-sub" data-i18n="sub_upstream"></p></div>
                                       <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800" data-i18n="adv_upstream_badge">Sing-Box / Clash</span>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -1343,11 +1354,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                               </div>
                           </div>
                           <!-- Section: Subscription -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#a78bfa">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">📝</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_subscription">Subscription</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_subscription">Subscription</span><p class="adv-sub" data-i18n="sub_sub"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1402,11 +1413,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                           </div>
 
                           <!-- Section: Protocol -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#f59e0b">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">⚡</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_protocol">Protocol</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_protocol">Protocol</span><p class="adv-sub" data-i18n="sub_proto"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1431,11 +1442,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                           </div>
 
                           <!-- Section: Cluster -->
-                          <div class="bg-indigo-50 dark:bg-indigo-950/20 rounded-2xl border border-indigo-100 dark:border-indigo-900/50 overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#ec4899">
                                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-indigo-100/50 dark:hover:bg-indigo-900/30 transition-colors">
-                                   <div class="flex items-center gap-3">
-                                       <span class="text-lg">🔬</span>
-                                       <span class="text-sm font-bold text-indigo-700 dark:text-indigo-300" data-i18n="other_nodes_title">Other Nodes</span>
+                                   <div class="adv-head">
+                                       <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.5V11m-5.3 6.2L12 11l5.3 6.2"></path></svg></div>
+                                       <div class="adv-txt"><span class="adv-title" data-i18n="other_nodes_title">Other Nodes</span><p class="adv-sub" data-i18n="sub_nodes"></p></div>
                                    </div>
                                    <svg class="w-4 h-4 text-indigo-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                </button>
@@ -1479,11 +1490,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                           </div>
 
                           <!-- Section: Telegram -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#3b82f6">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">🤖</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_telegram">Telegram Bot</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="9" width="14" height="9" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9V6m0 0a1.5 1.5 0 100-3m0 3a1.5 1.5 0 000-3M9.5 13h.01M14.5 13h.01M2 12v3m20-3v3"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_telegram">Telegram Bot</span><p class="adv-sub" data-i18n="sub_tg"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
@@ -1513,11 +1524,11 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                           </div>
 
                           <!-- Section: Cloudflare -->
-                          <div class="bg-[var(--color-surface)]  rounded-2xl border border-slate-200 dark:border-darkborder overflow-hidden" data-accordion="">
+                          <div class="adv-card" data-accordion="" style="--c:#38bdf8">
                               <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                  <div class="flex items-center gap-3">
-                                      <span class="text-lg">☁️</span>
-                                      <span class="text-sm font-bold text-slate-700 dark:text-white" data-i18n="adv_cloudflare">Cloudflare</span>
+                                  <div class="adv-head">
+                                      <div class="adv-ico"><svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h10a3 3 0 00.5-5.96A5.5 5.5 0 007 8.5 4.5 4.5 0 003 15z"></path></svg></div>
+                                      <div class="adv-txt"><span class="adv-title" data-i18n="adv_cloudflare">Cloudflare</span><p class="adv-sub" data-i18n="sub_cf"></p></div>
                                   </div>
                                   <svg class="w-4 h-4 text-slate-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                               </button>
