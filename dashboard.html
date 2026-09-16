@@ -466,6 +466,23 @@ input:focus, select:focus, textarea:focus { border-color: var(--color-primary) !
 
 
 
+
+/* logs redesign */
+.log-head{--c:#8b5cf6;position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;background:linear-gradient(120deg, rgba(139,92,246,.16), transparent 55%), var(--color-surface);border:1px solid var(--color-border);border-radius:18px;padding:18px 18px 18px 22px}
+.log-head::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c);box-shadow:0 0 14px var(--c)}
+.log-title{font-size:22px;font-weight:900;color:var(--color-text);margin:0 0 4px}
+.log-refresh{flex:none;display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:12px;border:1px solid rgba(59,130,246,.45);background:rgba(59,130,246,.1);color:#60a5fa;font-weight:800;font-size:13px;cursor:pointer}
+.log-card{--c:#2dd4bf;position:relative;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border) !important;border-radius:16px;padding:16px 16px 16px 20px}
+.log-card::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--c);box-shadow:0 0 12px var(--c)}
+.log-card.err{--c:#f43f5e}
+.log-top{display:flex;align-items:flex-start;gap:12px}
+.log-ico{flex:none;width:52px;height:52px;border-radius:50%;background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c);display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px color-mix(in srgb,var(--c) 25%,transparent)}
+.log-mid{flex:1;min-width:0}
+.log-t{margin:0 0 4px;font-size:15px;font-weight:800;color:var(--color-text)}
+.log-d{margin:0;font-size:12.5px;color:var(--color-text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-pill{flex:none;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c);font-size:10px;font-weight:800;letter-spacing:.1em}
+.log-pill::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.log-date{margin-top:12px;display:flex;align-items:center;gap:9px;border:1px solid var(--color-border);background:color-mix(in srgb,var(--c) 5%,transparent);border-radius:12px;padding:10px 14px;color:#9fb0c7;font-size:12px}
 /* metrics cards */
 .mcard{--c:#8b5cf6;position:relative;overflow:hidden;background:var(--color-surface);border:1px solid var(--color-border);border-radius:18px;padding:18px 18px 18px 22px;display:flex;align-items:center;gap:14px}
 .mcard::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:var(--c);box-shadow:0 0 14px var(--c)}
@@ -1903,21 +1920,20 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                        </div>
 
                       <!-- LOGS VIEW -->
-                      <div id="view-logs" class="hidden space-y-6">
-                          <div class="bg-[var(--color-surface)]/70 /70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-white/20 dark:border-white/10 relative overflow-hidden">
-                              <div class="flex items-center justify-between mb-6">
-                                  <h3 class="text-sm uppercase font-bold text-slate-500 tracking-wider" data-i18n="tab_logs">System Activity Logs</h3>
-                                  <button onclick="loadLogs()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-colors">
-                                      🔄 Refresh
-                                  </button>
+                      <div id="view-logs" class="hidden space-y-4">
+                          <div class="log-head">
+                              <div class="m-ico" style="--c:#8b5cf6"><svg width="26" height="26" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+                              <div class="m-mid">
+                                  <h3 class="log-title" data-i18n="tab_logs">Logs</h3>
+                                  <p class="m-sub" data-i18n="logs_desc">View your panel login history and activity logs.</p>
                               </div>
-                              <div class="space-y-3" id="logs-container">
-                                  <p class="text-sm text-slate-400 text-center py-8" data-i18n="loading_logs">Loading activity logs...</p>
-                              </div>
+                              <button class="log-refresh" onclick="loadLogs()"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg><span data-i18n="logs_refresh">Refresh</span></button>
+                          </div>
+                          <div id="logs-container" class="space-y-4">
+                              <p class="text-sm text-slate-400 text-center py-4" data-i18n="loading_logs">Loading activity logs...</p>
                           </div>
                       </div>
 
-                      <!-- HELP & FAQ VIEW -->
                       <div id="view-help" class="hidden space-y-6">
                           <div class="bg-[var(--color-surface)]/70 backdrop-blur-xl rounded-3xl p-6 shadow-lg border border-slate-200 dark:border-darkborder/50 relative overflow-hidden">
                               <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -3012,7 +3028,18 @@ proxyip.cmliussss.net" class="w-full px-4 py-3 rounded-xl border border-slate-20
                     let logsHtml = '';
                     data.logs.forEach(log => {
                         const dateStr = new Date(log.ts).toLocaleString('en-US', {hour12: false});
-                        logsHtml += `<div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-darkborder/50 gap-2"><div><p class="text-sm font-bold text-slate-700 dark:text-slate-200">${log.type}</p><p class="text-xs text-slate-500 truncate max-w-[200px] sm:max-w-xs" title="${log.detail}">${log.detail}</p></div><span class="text-[10px] font-mono text-slate-400 bg-[var(--color-surface)]  px-2 py-1 rounded shrink-0">${dateStr}</span></div>`;
+                        const good = !/fail|error|denied|disabled|blocked/i.test(log.type + ' ' + log.detail);
+                        logsHtml += `<div class="log-card${good ? '' : ' err'}">
+                            <div class="log-top">
+                                <div class="log-ico">${good ? '<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : '<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c.77.833 1.964 2.5 1.732 2.5z"></path></svg>'}</div>
+                                <div class="log-mid">
+                                    <p class="log-t">${log.type}</p>
+                                    <p class="log-d" title="${log.detail}">${log.detail}</p>
+                                </div>
+                                <span class="log-pill">${good ? 'SUCCESS' : 'ALERT'}</span>
+                            </div>
+                            <div class="log-date"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg><span class="font-mono">${dateStr}</span></div>
+                        </div>`;
                     });
                     container.innerHTML = logsHtml;
                 } else {
